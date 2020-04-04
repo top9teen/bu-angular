@@ -1,0 +1,134 @@
+<div [@routerTransition]>
+  <div class="font">
+    <h3>ประวัติผลการประเมิน</h3>
+  </div>
+  <hr>
+  <form [formGroup]="inspectionForm">
+    <link href="https://fonts.googleapis.com/css?family=Prompt&display=swap" rel="stylesheet">
+    <div class="row">
+      <!-- <div class="col-lg-1"></div> -->
+      <div class="col-lg-3">
+        <select class="form-control" formControlName="inspectionId"
+          [ngModel]="inspectionId != null ? inspectionId : '' ">
+          <option value="">-- โรค --</option>
+          <option *ngFor="let inspection of inspectionModels ; let i = index" value="{{inspection.inspectionId}}">
+            <span>{{inspection.inspectionName}}</span>
+          </option>
+        </select>
+      </div>
+      <div class="col-lg-2.5">
+        <input type="date" class="form-control" formControlName="dateStart">
+      </div>
+      <div class="col-lg-1">
+        <label style="text-align: center;">&nbsp; &nbsp;ถึง</label>
+      </div>
+      <div class="col-lg-2.5">
+        <input type="date" class="form-control" formControlName="dateEnd">
+      </div>
+      <div class="col-lg-2">
+        <div class="form-group">
+          <select class="form-control" formControlName="community" [ngModel]="community != null ? community : '' ">
+            <option value="">-- ชุมชน --</option>
+            <option value="1">วัดขุนก้อง</option>
+            <option value="2">วัดกลาง</option>
+            <option value="3">วัดร่องมันเทศ</option>
+            <option value="4">วัดป่าเรไร</option>
+            <option value="5">ป่าตาเส็ง</option>
+            <option value="6">วัดถนนหัก</option>
+            <option value="7">บ้านเก่า</option>
+            <option value="8">วัดใหม่เรไรทอง</option>
+            <option value="9">หนองโพรง</option>
+            <option value="10">ทุ่งแหลม</option>
+            <option value="11">หนองรี</option>
+            <option value="12">บ้านหนองกราด</option>
+            <option value="13">บ้านหนองเสม็ด</option>
+            <option value="14">บ้านจะบวก</option>
+            <option value="15">โคกหลวงพ่อ</option>
+            <option value="16">บ้านดอนแสลงพันธ์</option>
+            <option value="17">บ้านถนนหัก</option>
+            <option value="18">ถนนหักพัฒนา</option>
+            <option value="19">วัดสวนป่ารักน้ำ</option>
+            <option value="20">วัดหัวสะพาน</option>
+          </select>
+        </div>
+      </div>
+        <div class="col-lg-1">
+          <div class="button">
+            <a class="button button1" (click)="loadData()">ค้นหา</a>
+
+          </div>
+        </div>
+
+      
+      <!-- <div>
+        <button (click)="loadData()">ค้นหา</button>
+      </div> -->
+
+    </div>
+  </form>
+  <br>
+
+</div>
+<agm-map [latitude]="lat" [zoom]="zoom" [longitude]="lng">
+  <agm-marker *ngFor="let m of dataGoogleDetails; let i = index" (markerClick)="clickedMarker(m.label, i)"
+    [latitude]="m.lat" [longitude]="m.lng" [label]="m.name" [iconUrl]="m.marker" (dragEnd)="markerDragEnd(m, $event)">
+
+    <agm-info-window>
+      <strong>InfoWindow content</strong>
+    </agm-info-window>
+
+  </agm-marker>
+</agm-map>
+<br>
+<div *ngFor="let obj of dataCriterionDetails;">
+  <img src="{{obj.marker}}">
+  <!-- <img src="assets/images/marker-green.png" alt=""> -->
+  <label>{{obj.criterDetail}}</label>
+</div>
+<!-- <br> -->
+<!-- <div class="row">
+  <div class="col-lg-2"></div>
+  <div class="col col-sm-8">
+    <div class="card mb-3">
+      <div class="card-header">
+        ผลการประเมิน
+      </div>
+      <div class="card-body">
+        <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+          [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)"
+          (chartClick)="chartClicked($event)">
+        </canvas>
+      </div>
+    </div>
+  </div>
+  <div class="col-lg-2"></div>
+</div> -->
+<br>
+<hr>
+<br>
+<div>
+  <table datatable class="row-border hover">
+    <thead>
+      <tr>
+        <th>ลำดับ</th>
+        <th>ชื่อ - สกุล</th>
+        <th>ผลการประเมิน</th>
+        <th>ชุมชน</th>
+        <th>ปริ้นรายงาน</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let obj of dataGoogleDetails ; let i = index">
+        <td><span>{{i + 1}}</span></td>
+        <td><span>{{obj.name}}</span></td>
+        <td><span>{{obj.assessmentDetail}}</span></td>
+        <td><span>{{obj.community}}</span></td>
+        <td>
+          <div class="button">
+            <a class="button button1" href="{{pdfURL}}{{obj.assessmentId}}" target="_blank">Report</a>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

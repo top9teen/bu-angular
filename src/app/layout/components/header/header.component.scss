@@ -1,0 +1,46 @@
+$topnav-background-color: rgb(132, 209, 191);
+:host {
+    .navbar {
+        font-family: 'Prompt', sans-serif;
+        background-color: $topnav-background-color;
+        .navbar-brand {
+            color: #fff;
+        }
+        .nav-item > a {
+            color: #fff;
+            &:hover {
+                color: #999;
+            }
+        }
+    }
+    .messages {
+        width: 300px;
+        .media {
+            border-bottom: 1px solid #ddd;
+            padding: 5px 10px;
+            &:last-child {
+                border-bottom: none;
+            }
+        }
+        .media-body {
+            h5 {
+                font-size: 13px;
+                font-weight: 600;
+            }
+            .small {
+                margin: 0;
+            }
+            .last {
+                font-size: 12px;
+                margin: 0;
+            }
+        }
+    }
+}
+.circle{ /* ชื่อคลาสต้องตรงกับ <img class="circle"... */
+    height: auto;  /* ความสูงปรับให้เป็นออโต้ */
+    width: auto;  /* ความสูงปรับให้เป็นออโต้ */
+    border: 3px solid #fff; /* เส้นขอบขนาด 3px solid: เส้น #fff:โค้ดสีขาว */
+    border-radius: 50%; /* ปรับเป็น 50% คือความโค้งของเส้นขอบ*/
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2); /* เงาของรูป */
+}

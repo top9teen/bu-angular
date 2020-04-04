@@ -1,0 +1,91 @@
+<div [@routerTransition]>
+  <!-- <app-page-header [heading]="'ประวัติผลการประเมิน'" [icon]="'fa-bar-chart-o'"></app-page-header> -->
+  <div class="head">
+    <h3>ประวัติผลการประเมิน</h3>
+  </div>
+  <hr>
+  <form [formGroup]="inspectionForm">
+    <div class="row">
+      <div class="col-lg-3"></div>
+      <div class="col-lg-6">
+        <select class="form-control" formControlName="inspectionId" (change)="loadData()"
+          [ngModel]="inspectionId != null ? inspectionId : '' ">
+          <option value="">-- เลือก --</option>
+          <option *ngFor="let inspection of inspectionModels ; let i = index" value="{{inspection.inspectionId}}">
+            <span>{{inspection.inspectionName}}</span>
+          </option>
+        </select>
+      </div>
+      <!-- <div class="col-lg-1"><button class="btn btn-info" (click)="loadData()">ค้นหา</button></div> -->
+    </div>
+  </form>
+  <!-- <hr> -->
+  <br>
+  <br>
+  <div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col col-sm-8">
+      <div class="card mb-3">
+        <div class="card-header">
+          ผลการประเมิน
+        </div>
+        <div class="card-body">
+          <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
+            [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)"
+            (chartClick)="chartClicked($event)">
+          </canvas>
+        </div>
+        <!-- <div class="card-footer">
+                  <button class="btn btn-info btn-sm" (click)="randomize()">Update</button>
+              </div> -->
+      </div>
+    </div>
+    <div class="col-lg-2"></div>
+  </div>
+<br>
+  <div class="row" *ngFor="let obj of criterions; let i = index">
+    <div class="col-lg-2"></div>
+    <!-- <div class="col-lg-1"><label>เกณฑ์ที่ {{i+1}}</label></div> -->
+    <div class="col-lg-1"><label>คะแนน</label></div>
+    <div class="col-lg-2"><label>{{obj.criterionStart}}<span style="padding: 10px;">  ถึง  </span>{{obj.criterionEnd}}  </label></div>
+    <div class="col-lg-7"><label>{{obj.criterionDetail}}</label></div>
+    <!-- <div class="col-lg-1">
+      <label></label>
+    </div>
+    <div class="col-lg-1" style="text-align: center;"><label>ถึง</label></div>
+    <div class="col-lg-1">
+      <label></label>
+    </div>
+    <div class="col-lg-8">
+      <label></label>
+    </div> -->
+  </div>
+  <br>
+</div>
+
+<hr>
+
+<div>
+  <table datatable class="row-border hover">
+    <thead>
+      <tr>
+        <th>ลำดับ</th>
+        <th>วันที่</th>
+        <th>ผลการประเมิน</th>
+        <th>ปริ้นรายงาน</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let obj of assessModels ; let i = index">
+        <td><span>{{i + 1}}</span></td>
+        <td><span>{{obj.createDate}}</span></td>
+        <td><span>{{obj.assessmentDetail}}</span></td>
+        <td>
+          <div class="button">
+            <a class="button button1" href="{{pdfURL}}{{obj.assessmentId}}" target="_blank">Report</a>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

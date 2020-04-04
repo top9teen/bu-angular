@@ -1,0 +1,50 @@
+<!-- <app-page-header [heading]="'เพิ่มข้อมูลโรค'" [icon]="'fa-edit'"></app-page-header>
+<hr> -->
+<div class="font">
+    <h3>จัดการข้อมูลคำถาม</h3>
+  </div>
+  <hr>
+<form>
+  <div class="row">
+    <div class="col-lg-12">
+     <h5><span>ชื่อโรค/การประเมินคัดกรอง : {{inspectionName}}</span></h5>
+    </div>
+  </div>
+  <br>
+  <div *ngFor="let question of questions ; let i = index">
+    <div class="row">
+      <div class="col-lg-1"></div>
+      <div class="col-lg-9">
+        <h6>คำถาม : {{question.questionName}}</h6>
+      </div>
+
+      <!-- <div> 
+        <button class="btn rounded-btn" (click)="onUpdateQuestion(question.questionId)">แก้ไข</button> &nbsp;
+        <button class="btn rounded-btn" (click)="onDeleteQuestion(question.questionId)">ลบ</button>
+      </div> -->
+
+      <div class="button">
+          <button class="button button1" (click)="onUpdateQuestion(question.questionId)">แก้ไข</button>
+          <button class="button button2" (click)="onDeleteQuestion(question.questionId)">ลบ</button>
+      </div>
+
+
+    </div>
+    <hr>
+  </div>
+  <!-- /.row -->
+  <!-- <div class="row">
+      <div class="col-lg-1"></div>
+    <button class="btn rounded-btn" (click)="onUpdateQuestion()">เพิ่มคำถาม</button>
+    &nbsp;
+    <button class="btn rounded-btn" (click)="onBack()">ยกเลิก</button>
+  </div> -->
+  <br>
+  <div class="row">
+      <div class="col-lg-1"></div>
+  <div class="button">
+      <button class="button button3" (click)="onUpdateQuestion()">เพิ่มคำถาม</button>
+      <button class="button button4" (click)="onBack()">ยกเลิก</button>
+  </div>
+</div>
+</form>

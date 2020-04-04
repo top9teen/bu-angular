@@ -1,0 +1,160 @@
+<!-- <app-page-header [heading]="'ข้อมูลเกณฑ์การประเมิน'" [icon]="'fa-edit'"></app-page-header>
+<hr> -->
+<div class="font">
+    <h3>จัดการเกณฑ์การประเมิน</h3>
+  </div>
+  <hr>
+<form [formGroup]="criterionForm">
+  <!-- <div class="row">
+    <div class="col-lg-1"></div>
+    <div class="col-lg-11">
+      <div class="col-lg-8">
+        <label>โรค/การประเมินสมรรถนะ </label>
+        <input type="text" class="form-control" formControlName="inspectionName"
+          [ngModel]="inspectionName">
+      </div>
+    </div>
+</div> -->
+<br>
+
+    <div class="row">
+    <div class="col-lg-2"></div>
+    <div class="col-lg-3" style="text-align: right;"><h4>โรค/คัดกรอง :</h4></div>
+    <div class="col-lg-4">
+        <input type="text" class="form-control" formControlName="inspectionName"
+        [ngModel]="inspectionName">
+    </div>
+    <div class="col-lg-3"></div>
+
+  </div>
+  
+  <!-- <hr> -->
+  <br>
+  <br>
+  <div class="row">
+    <div class="col-lg-1"><label>เกณฑ์ที่ 1</label></div>
+    <div class="col-lg-1">
+      <input type="text" class="form-control" formControlName="criterionStart_1"
+        [ngModel]="null != criterions && criterions.length >=  1 ? criterions[0].criterionStart : '' ">
+    </div>
+    <div class="col-lg-1"  style="text-align: center;"><label>ถึง</label></div>
+    <div class="col-lg-1">
+      <input type="text" class="form-control" formControlName="criterionEnd_1"
+        [ngModel]="null !=  criterions && criterions.length >=  1 ? criterions[0].criterionEnd : '' ">
+    </div>
+    <div class="col-lg-8">
+      <input type="text" class="form-control" formControlName="criterionDetail_1"
+        [ngModel]="null !=  criterions && criterions.length >=  1 ? criterions[0].criterionDetail : '' ">
+    </div>
+    <!-- <div class="col-lg-1">
+      <select class="form-control" class="form-control"  formControlName="criterionColor_1"
+      [ngModel]="null !=  criterions && criterions.length >=  1 ? criterions[0].criterionColor : '' " >
+      <option value="" style="background-color:#33B056;">สีเขียว</option>
+      <option value="1">สีเขียวอ่อน</option>
+      <option value="2">วัดกลาง</option>
+      <option value="3">วัดร่องมันเทศ</option>
+      <option value="4">วัดป่าเรไร</option>
+      </select>
+    </div> -->
+   
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-lg-1"><label>เกณฑ์ที่ 2</label></div>
+    <div class="col-lg-1">
+      <input type="text" class="form-control" formControlName="criterionStart_2"
+        [ngModel]="null != criterions && criterions.length >=  2 ? criterions[1].criterionStart : '' ">
+    </div>
+    <div class="col-lg-1"  style="text-align: center;"><label>ถึง</label></div>
+    <div class="col-lg-1">
+      <input type="text" class="form-control" formControlName="criterionEnd_2"
+        [ngModel]="null !=  criterions && criterions.length >=  2 ? criterions[1].criterionEnd : '' ">
+    </div>
+    <div class="col-lg-8">
+      <input type="text" class="form-control" formControlName="criterionDetail_2"
+        [ngModel]="null !=  criterions && criterions.length >=  2 ? criterions[1].criterionDetail : '' ">
+    </div>
+    <!-- <div class="col-lg-1">
+      <input type="color" class="input-color"  formControlName="criterionColor_2"
+      [ngModel]="null !=  criterions && criterions.length >=  2 ? criterions[1].criterionColor : '' " >
+    </div> -->
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-lg-1"><label>เกณฑ์ที่ 3</label></div>
+    <div class="col-lg-1">
+      <input type="text" class="form-control" formControlName="criterionStart_3"
+        [ngModel]="null != criterions && criterions.length >=  3 ? criterions[2].criterionStart : '' ">
+    </div>
+    <div class="col-lg-1"  style="text-align: center;"><label>ถึง</label></div>
+    <div class="col-lg-1">
+      <input type="text" class="form-control" formControlName="criterionEnd_3"
+        [ngModel]="null !=  criterions && criterions.length >=  3 ? criterions[2].criterionEnd : '' ">
+    </div>
+    <div class="col-lg-8">
+      <input type="text" class="form-control" formControlName="criterionDetail_3"
+        [ngModel]="null !=  criterions && criterions.length >=  3 ? criterions[2].criterionDetail : '' ">
+    </div>
+    <!-- <div class="col-lg-1">
+      <input type="color" class="input-color"  formControlName="criterionColor_3"
+      [ngModel]="null !=  criterions && criterions.length >=  3 ? criterions[2].criterionColor : '' " >
+    </div> -->
+  </div>
+  <br>
+  <div class="row">
+    <div class="col-lg-1"><label>เกณฑ์ที่ 4</label></div>
+    <div class="col-lg-1">
+      <input type="text" class="form-control" formControlName="criterionStart_4"
+        [ngModel]="null != criterions && criterions.length >=  4 ? criterions[3].criterionStart : '' ">
+    </div>
+    <div class="col-lg-1"  style="text-align: center;"><label>ถึง</label></div>
+    <div class="col-lg-1">
+      <input type="text" class="form-control" formControlName="criterionEnd_4"
+        [ngModel]="null !=  criterions && criterions.length >=  4 ? criterions[3].criterionEnd : '' ">
+    </div>
+    <div class="col-lg-8">
+      <input type="text" class="form-control" formControlName="criterionDetail_4"
+        [ngModel]="null !=  criterions && criterions.length >=  4 ? criterions[3].criterionDetail : '' ">
+    </div>
+    <!-- <div class="col-lg-1">
+      <input type="color" class="input-color"  formControlName="criterionColor_4"
+      [ngModel]="null !=  criterions && criterions.length >=  4 ? criterions[3].criterionColor : '' " >
+    </div> -->
+  </div>
+<br>
+  <div class="row">
+    <div class="col-lg-1"><label>เกณฑ์ที่ 5</label></div>
+    <div class="col-lg-1">
+      <input type="text" class="form-control" formControlName="criterionStart_5"
+        [ngModel]="null != criterions && criterions.length >=  5 ? criterions[4].criterionStart : '' ">
+    </div>
+    <div class="col-lg-1"  style="text-align: center;"><label>ถึง</label></div>
+    <div class="col-lg-1">
+      <input type="text" class="form-control" formControlName="criterionEnd_5"
+        [ngModel]="null !=  criterions && criterions.length >=  5 ? criterions[4].criterionEnd : '' ">
+    </div>
+    <div class="col-lg-8">
+      <input type="text" class="form-control" formControlName="criterionDetail_5"
+        [ngModel]="null !=  criterions && criterions.length >=  5 ? criterions[4].criterionDetail : '' ">
+    </div>
+    <!-- <div class="col-lg-1">
+      <input type="color" class="input-color"  formControlName="criterionColor_5"
+      [ngModel]="null !=  criterions && criterions.length >=  5 ? criterions[4].criterionColor : '' " >
+    </div> -->
+  </div>
+  <br>
+  <hr>
+  
+
+  <!-- <div class="row">
+    <button class="btn rounded-btn" (click)="onSaveCriterion()">บันทึก</button>
+    &nbsp;
+    <button class="btn rounded-btn" (click)="onBack()">ยกเลิก</button>
+  </div> -->
+
+  <div class="button">
+      <button class="button button1" (click)="onSaveCriterion()">บันทึก</button>
+      <button class="button button2" (click)="onBack()">ยกเลิก</button>
+  </div>
+
+</form>

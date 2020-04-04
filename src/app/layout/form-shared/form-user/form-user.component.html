@@ -1,0 +1,107 @@
+<div [@routerTransition]>
+  <hr>
+  <h5>ข้อมูลส่วนตัว</h5>
+  <form >
+      <div class="row">
+          <div class="col-lg-1"></div>
+          <div class="col-lg-5">
+              <fieldset class="form-group">
+                  <label>รหัสประจำตัว</label>
+                  <input type="text" class="form-control" formControlName="cardId">
+              </fieldset>
+              <fieldset class="form-group">
+                  <label>ชื่อ</label>
+                  <input type="text" class="form-control" formControlName="fertName">
+              </fieldset>
+              <div class="form-group">
+                  <label>เพศ</label>
+                  <select class="form-control" formControlName="sex">
+                      <option value="0">-- เลือก --</option>
+                      <option value="1">ชาย</option>
+                      <option value="2">หญิง</option>
+                  </select>
+              </div>
+              <fieldset class="form-group">
+                  <label>เบอร์โทร</label>
+                  <input type="text" class="form-control" formControlName="phoneNo">
+              </fieldset>
+          </div>
+          <div class="col-lg-5">
+              <div class="form-group">
+                  <label>คำนำหน้า</label>
+                  <select class="form-control" formControlName="titleName">
+                      <option value="0" selected>-- เลือก --</option>
+                      <option value="1">นาย</option>
+                      <option value="2">นาง</option>
+                      <option value="3">นางสาว</option>
+                  </select>
+              </div>
+              <fieldset class="form-group">
+                  <label>สกุล</label>
+                  <input type="text" class="form-control" formControlName="lastName">
+              </fieldset>
+              <fieldset class="form-group">
+                  <label>วันเกิด</label>
+                  <input type="date" class="form-control" formControlName="birthday">
+              </fieldset>
+          </div>
+          <div class="col-lg-1"></div>
+      </div>
+      <!-- /.row -->
+      <hr>
+      <h5>ข้อมูลที่อยู่</h5>
+      <div class="row">
+          <div class="col-lg-1"></div>
+          <div class="col-lg-5">
+              <fieldset class="form-group">
+                  <label>บ้านเลขที่</label>
+                  <input type="text" class="form-control" formControlName="houseNo">
+              </fieldset>
+              <fieldset class="form-group">
+                  <label>อำเภอ</label>
+                  <input type="text" class="form-control" formControlName="district">
+              </fieldset>
+
+              <fieldset class="form-group">
+                  <label>รหัสไปรษณีย์</label>
+                  <input type="text" class="form-control" formControlName="postal">
+              </fieldset>
+          </div>
+          <div class="col-lg-5">
+              <fieldset class="form-group">
+                  <label>ตำบล</label>
+                  <input type="text" class="form-control" formControlName="subdistrict">
+              </fieldset>
+              <fieldset class="form-group">
+                  <label>จังหวัด</label>
+                  <input type="text" class="form-control" formControlName="province">
+              </fieldset>
+          </div>
+          <div class="col-lg-1"></div>
+      </div>
+      <hr>
+      <!-- /.row -->
+
+      <h5>ข้อมูลบัญชี</h5>
+      <div class="row">
+          <div class="col-lg-1"></div>
+          <div class="col-lg-5">
+              <fieldset class="form-group">
+                  <label>ชื่อบัญชี</label>
+                  <input type="text" class="form-control" formControlName="userName">
+              </fieldset>
+              <fieldset class="form-group">
+                  <label>รหัสผ่าน</label>
+                  <input type="text" class="form-control" formControlName="passWord">
+              </fieldset>
+              <!-- <fieldset class="form-group">
+                  <label>ยืนยันรหัสผ่าน</label>
+                  <input type="text" class="form-control" formControlName="passWordConf">
+              </fieldset> -->
+              <button class="btn rounded-btn">บันทึก</button>
+              &nbsp;
+              <button class="btn rounded-btn" [routerLink]="['/home']">ยกเลิก</button>
+          </div>
+      </div>
+  </form>
+</div>

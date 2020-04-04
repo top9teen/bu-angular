@@ -1,0 +1,32 @@
+<!-- <app-page-header [heading]="'เพิ่มข้อมูลโรค'" [icon]="'fa-edit'"></app-page-header> -->
+<div class="font">
+  <h3>เพิ่มข้อมูลโรค/การประเมินคัดกรอง</h3>
+</div>
+<hr>
+<form [formGroup]="inspectionForm">
+  <div class="row">
+    <!-- <div class="col-lg-1"></div> -->
+    <div class="col-lg">
+      <fieldset class="form-group">
+        <label>ชื่อโรค/การประเมินคัดกรอง</label>
+        <input type="text" class="form-control" formControlName="inspectionName"
+          [ngModel]="inspectionModel != null ? inspectionModel.inspectionName : '' ">
+      </fieldset>
+    </div>
+  </div>
+  <!-- <br> -->
+  <!-- /.row -->
+  <!-- <hr> -->
+  <!-- <div class="row">
+    <button class="btn rounded-btn" (click)="saveInspection()">บันทึก</button>
+    &nbsp;
+    <button class="btn rounded-btn" (click)="onBack()">ยกเลิก</button>
+  </div> -->
+
+  <div class="button">
+    <button class="button button1" (click)="saveInspection()">บันทึก</button>
+    <button class="button button2" (click)="onBack()">ยกเลิก</button>
+  </div>
+
+
+</form>

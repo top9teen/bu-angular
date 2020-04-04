@@ -1,0 +1,119 @@
+<nav class="sidebar"
+    [ngClass]="{sidebarPushRight: isActive, collapsed: collapsed}">
+    <link href="https://fonts.googleapis.com/css?family=Prompt&display=swap" rel="stylesheet">
+	<div class="list-group">
+		<div *ngFor="let menuMain of menuMains ; let i = index">		
+				<div *ngIf="menuMain.menuSubs?.length != 0" class="nested-menu">
+                    <a class="list-group-item"  [routerLinkActive]="['router-link-active']"
+                    (click)="addExpandClass(i)"> <i
+						class="fa fa-plus"></i>&nbsp; <span>{{menuMain.menuNameTh}}</span>
+					</a>
+
+					<li class="nested" [class.expand]="showMenu === i">
+						<ul class="submenu">
+							<div *ngFor="let menuSubs of menuMain.menuSubs"><a
+								routerLink="{{menuSubs.menuSubUrl}}"
+								[routerLinkActive]="['router-link-active']"> <i
+									class="fa fa-edit"></i>&nbsp; <span>{{menuSubs.menuSubNameTh}}</span>
+							</a></div>
+						</ul>
+					</li>
+				</div>
+			    <div *ngIf="menuMain.menuSubs?.length == 0">
+				    <a routerLink="{{menuMain.menuUrl}}"
+				    	[routerLinkActive]="['router-link-active']" class="list-group-item">
+				    	<i class="fa fa-home"></i>&nbsp; <span>{{menuMain.menuNameTh}}</span>
+				    </a>
+			    </div>
+        </div>
+		<!-- <a routerLink="/home" [routerLinkActive]="['router-link-active']"
+			class="list-group-item"> <i class="fa fa-home"></i>&nbsp; <span>{{
+				'หน้าแรก' | translate }}</span>
+		</a> <a routerLink="/users" [routerLinkActive]="['router-link-active']"
+			class="list-group-item"> <i class="fa fa-user"></i>&nbsp; <span>{{
+				'จัดการข้อมูลผู้สูงอายุ' | translate }}</span>
+		</a> -->
+		<div class="header-fields">
+            <a (click)="rltAndLtr()" class="list-group-item">
+                <span><i class="fa fa-arrows-h"></i>&nbsp; RTL/LTR</span>
+            </a>
+            <div class="nested-menu">
+                <a class="list-group-item" (click)="addExpandClass('languages')">
+                    <span><i class="fa fa-language"></i>&nbsp; {{ 'Language' | translate }} <b class="caret"></b></span>
+                </a>
+                <li class="nested" [class.expand]="showMenu === 'languages'">
+                    <ul class="submenu">
+                        <li>
+                            <a href="javascript:void(0)" (click)="changeLang('en')">
+                                {{ 'English' | translate }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" (click)="changeLang('fr')">
+                                {{ 'French' | translate }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" (click)="changeLang('ur')">
+                                {{ 'Urdu' | translate }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" (click)="changeLang('es')">
+                                {{ 'Spanish' | translate }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" (click)="changeLang('it')">
+                                {{ 'Italian' | translate }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" (click)="changeLang('fa')">
+                                {{ 'Farsi' | translate }}
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)" (click)="changeLang('de')">
+                                {{ 'German' | translate }}
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </div>
+            <div class="nested-menu">
+                <a class="list-group-item" (click)="addExpandClass('profile')">
+                    <span><i class="fa fa-user"></i>&nbsp; John Smith</span>
+                </a>
+                <li class="nested" [class.expand]="showMenu === 'profile'">
+                    <ul class="submenu">
+                        <li>
+                            <a href="javascript:void(0)">
+                                <span><i class="fa fa-fw fa-user"></i> {{ 'Profile' | translate }}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <span><i class="fa fa-fw fa-envelope"></i> {{ 'Inbox' | translate }}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a href="javascript:void(0)">
+                                <span><i class="fa fa-fw fa-gear"></i> {{ 'Settings' | translate }}</span>
+                            </a>
+                        </li>
+                        <li>
+                            <a [routerLink]="['/login']" (click)="onLoggedout()">
+                                <span><i class="fa fa-fw fa-power-off"></i> {{ 'Log Out' | translate }}</span>
+                            </a>
+                        </li>
+                    </ul>
+                </li>
+            </div>
+        </div>
+    </div>
+    <div class="toggle-button" [ngClass]="{collapsed: collapsed}" (click)="toggleCollapsed()">
+        <i class="fa fa-fw fa-angle-double-left"></i>&nbsp;
+        <span>{{ 'Collapse Sidebar' | translate }}</span>
+    </div>
+</nav>

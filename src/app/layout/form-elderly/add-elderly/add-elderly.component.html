@@ -1,0 +1,229 @@
+<!-- <app-page-header [heading]="'เพิ่มข้อมูลผู้สูงอายุ'" [icon]="'fa-edit'"></app-page-header> -->
+<link href="https://fonts.googleapis.com/css?family=Prompt&display=swap" rel="stylesheet">
+<div class="head">
+    <h3>ข้อมูลผู้สูงอายุ</h3>
+</div>
+<hr>
+<div class="head">
+    <h5>ข้อมูลส่วนตัว</h5>
+</div>
+<form [formGroup]="profileForm">
+    <input type="hidden" class="form-control" formControlName="userId"
+        [ngModel]="profileModel != null ? profileModel.userId : '' ">
+    <div class="row">
+        <div class="col-lg-1"></div>
+        <div *ngIf="imgURL != ''" class="col-lg-5">
+            <img [src]="imgURL" height="200" *ngIf="imgURL"><br>
+            <!-- <span style="color:red;" *ngIf="message">{{message}}</span> -->
+            <input #file type="file" accept='image/*' (change)="preview(file.files)" />
+        </div>
+        <div *ngIf="imgURL == ''" class="col-lg-5">
+            <img src="assets/images/profile.jpg" height="200"><br>
+            <input #file type="file" accept='image/*' (change)="preview(file.files)" />
+        </div>
+    </div>
+    <br>
+    <div class="row">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-5">
+            <fieldset class="form-group">
+                <label>รหัสประจำตัวประชาชน</label>
+                <input type="text" class="form-control" formControlName="cardId"
+                    [ngModel]="profileModel != null ? profileModel.cardId : '' ">
+            </fieldset>
+            <fieldset class="form-group">
+                <label>ชื่อ</label>
+                <input type="text" class="form-control" formControlName="fertName"
+                    [ngModel]="profileModel != null ? profileModel.fertName : '' ">
+            </fieldset>
+            <fieldset class="form-group">
+                <label>อายุ</label>
+                <input type="text" class="form-control" formControlName="age"
+                    [ngModel]="profileModel != null ? profileModel.age : '' ">
+            </fieldset>
+            <fieldset class="form-group">
+                <label>ที่อยู่</label>
+                <input type="text" class="form-control" formControlName="houseNo"
+                    [ngModel]="profileModel != null ? profileModel.houseNo : '' ">
+            </fieldset>
+            <!-- <div class="form-group">
+                <label>เพศ</label>
+                <select class="form-control" formControlName="sex"
+                    [ngModel]="profileModel != null ? profileModel.sex : '' ">
+                    <option value="">-- เลือก --</option>
+                    <option value="1">ชาย</option>
+                    <option value="2">หญิง</option>
+                </select>
+            </div> -->
+
+        </div>
+        <div class="col-lg-5">
+            <div class="form-group">
+                <label>คำนำหน้า</label>
+                <select class="form-control" formControlName="titleName"
+                    [ngModel]="profileModel != null ? profileModel.titleName : '' ">
+                    <option value="">-- เลือก --</option>
+                    <option value="1">นาย</option>
+                    <option value="2">นาง</option>
+                    <option value="3">นางสาว</option>
+                </select>
+            </div>
+            <fieldset class="form-group">
+                <label>สกุล</label>
+                <input type="text" class="form-control" formControlName="lastName"
+                    [ngModel]="profileModel != null ? profileModel.lastName : '' ">
+            </fieldset>
+
+            <fieldset class="form-group">
+                <label>เบอร์โทร</label>
+                <input type="text" class="form-control" formControlName="phoneNo"
+                    [ngModel]="profileModel != null ? profileModel.phoneNo : '' ">
+            </fieldset>
+            <div class="form-group">
+                <label>ชุมชน</label>
+                <select class="form-control" formControlName="community"
+                    [ngModel]="profileModel != null ? profileModel.community : '' ">
+                    <option value="">-- เลือก --</option>
+                    <option value="1">วัดขุนก้อง</option>
+                    <option value="2">วัดกลาง</option>
+                    <option value="3">วัดร่องมันเทศ</option>
+                    <option value="4">วัดป่าเรไร</option>
+                    <option value="5">ป่าตาเส็ง</option>
+                    <option value="6">วัดถนนหัก</option>
+                    <option value="7">บ้านเก่า</option>
+                    <option value="8">วัดใหม่เรไรทอง</option>
+                    <option value="9">หนองโพรง</option>
+                    <option value="10">ทุ่งแหลม</option>
+                    <option value="11">หนองรี</option>
+                    <option value="12">บ้านหนองกราด</option>
+                    <option value="13">บ้านหนองเสม็ด</option>
+                    <option value="14">บ้านจะบวก</option>
+                    <option value="15">โคกหลวงพ่อ</option>
+                    <option value="16">บ้านดอนแสลงพันธ์</option>
+                    <option value="17">บ้านถนนหัก</option>
+                    <option value="18">ถนนหักพัฒนา</option>
+                    <option value="19">วัดสวนป่ารักน้ำ</option>
+                    <option value="20">วัดหัวสะพาน</option>
+                </select>
+            </div>
+        </div>
+        <div class="col-lg-1"></div>
+    </div>
+    <!-- /.row -->
+    <!-- <hr> -->
+    <!-- <h5>ข้อมูลที่อยู่</h5> -->
+    <!-- <div class="row">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-5">
+            <fieldset class="form-group">
+                <label>ที่อยู่</label>
+                <input type="text" class="form-control" formControlName="houseNo"
+                    [ngModel]="profileModel != null ? profileModel.houseNo : '' ">
+            </fieldset>
+            <fieldset class="form-group">
+                <label>ตำบล</label>
+                <input type="text" class="form-control" formControlName="subdistrict"
+                    [ngModel]="profileModel != null ? profileModel.subdistrict : '' ">
+            </fieldset>
+            <fieldset class="form-group">
+                <label>จังหวัด</label>
+                <input type="text" class="form-control" formControlName="province"
+                    [ngModel]="profileModel != null ? profileModel.province : '' ">
+            </fieldset>
+
+        </div>
+        <div class="col-lg-5">
+            <div class="form-group">
+                <label>ชุมชน</label>
+                <select class="form-control" formControlName="community"
+                    [ngModel]="profileModel != null ? profileModel.community : '' ">
+                    <option value="">-- เลือก --</option>
+                    <option value="1">วัดขุนก้อง</option>
+                    <option value="2">วัดกลาง</option>
+                    <option value="3">วัดร่องมันเทศ</option>
+                    <option value="4">วัดป่าเรไร</option>
+                    <option value="5">ป่าตาเส็ง</option>
+                    <option value="6">วัดถนนหัก</option>
+                    <option value="7">บ้านเก่า</option>
+                    <option value="8">วัดใหม่เรไรทอง</option>
+                    <option value="9">หนองโพรง</option>
+                    <option value="10">ทุ่งแหลม</option>
+                    <option value="11">หนองรี</option>
+                    <option value="12">บ้านหนองกราด</option>
+                    <option value="13">บ้านหนองเสม็ด</option>
+                    <option value="14">บ้านจะบวก</option>
+                    <option value="15">โคกหลวงพ่อ</option>
+                    <option value="16">บ้านดอนแสลงพันธ์</option>
+                    <option value="17">บ้านถนนหัก</option>
+                    <option value="18">ถนนหักพัฒนา</option>
+                    <option value="19">วัดสวนป่ารักน้ำ</option>
+                    <option value="20">วัดหัวสะพาน</option>
+                </select>
+            </div>
+            <fieldset class="form-group">
+                <label>อำเภอ</label>
+                <input type="text" class="form-control" formControlName="district"
+                    [ngModel]="profileModel != null ? profileModel.district : '' ">
+            </fieldset>
+
+            <fieldset class="form-group">
+                <label>รหัสไปรษณีย์</label>
+                <input type="text" class="form-control" formControlName="postal"
+                    [ngModel]="profileModel != null ? profileModel.postal : '' ">
+            </fieldset>
+
+        </div>
+        <div class="col-lg-1"></div>
+    </div> -->
+    <!-- <hr> -->
+    <!-- <br> -->
+    <!-- /.row -->
+    <div *ngIf="!showActions">
+        <fieldset class="form-group">
+            <input type="hidden" class="form-control" formControlName="userName"
+                [ngModel]="profileModel != null ? profileModel.userName : '' ">
+        </fieldset>
+        <fieldset class="form-group">
+            <input type="hidden" class="form-control" formControlName="passWord"
+                [ngModel]="profileModel != null ? profileModel.passWord : '' ">
+        </fieldset>
+    </div>
+    <div *ngIf="showActions">
+        <div class="head">
+            <h5>ข้อมูลบัญชี</h5>
+        </div>
+        <div class="row">
+            <div class="col-lg-1"></div>
+            <div class="col-lg-5">
+                <fieldset class="form-group">
+                    <label>ชื่อบัญชี</label>
+                    <input type="text" class="form-control" formControlName="userName"
+                        [ngModel]="profileModel != null ? profileModel.userName : '' ">
+                </fieldset>
+            </div>
+            <div class="col-lg-5">
+                <fieldset class="form-group">
+                    <label>รหัสผ่าน</label>
+                    <input type="text" class="form-control" formControlName="passWord"
+                        [ngModel]="profileModel != null ? profileModel.passWord : '' ">
+                </fieldset>
+            </div>
+            <div class="col-lg-1"></div>
+
+        </div>
+    </div>
+    <agm-map [latitude]="lat" [zoom]="zoom" [longitude]="lng" [disableDefaultUI]="false" [zoomControl]="false"
+        (mapClick)="mapClicked($event)">>
+       <agm-marker  [markerDraggable]="true" [latitude]="lat" [longitude]="lng"
+            (dragEnd)="markerDragEnd(null, $event)">
+        </agm-marker>
+    </agm-map>
+
+    <hr>
+    <!-- <br> -->
+    <div class="button">
+        <button class="button button1" (click)="saveProfile()">บันทึก</button>
+        <button class="button button2" (click)="onBack()">ยกเลิก</button>
+    </div>
+    <br>
+</form>

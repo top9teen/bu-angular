@@ -1,0 +1,14 @@
+{
+  "725|@angular-devkit/build-angular>webpack-dev-server": {
+    "fix": 1
+  },
+  "788|@angular-devkit/build-angular>istanbul>js-yaml": {
+    "fix": 1
+  },
+  "788|@angular-devkit/build-angular>postcss-loader>postcss-load-config>cosmiconfig>js-yaml": {
+    "fix": 1
+  },
+  "786|@angular/compiler-cli>chokidar>anymatch>micromatch>braces": {
+    "fix": 1
+  }
+}

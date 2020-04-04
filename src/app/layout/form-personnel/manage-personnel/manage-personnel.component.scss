@@ -1,0 +1,42 @@
+.head {
+    font-family: 'Prompt', sans-serif;
+}
+
+.button {
+    text-align: center;
+    font-family: 'Prompt', sans-serif;
+}
+
+.button1 {
+    background-color: #EEC900; 
+    border: none;
+    border-radius: 4px;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    padding: 6px 14px;
+}
+.button1:hover {
+    background-color: #8B7500;
+}
+
+.button2 {
+    background-color: #f44336; /* red */
+    border: none;
+    border-radius: 4px;
+    color: white;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 4px 2px;
+    cursor: pointer;
+    padding: 6px 14px;
+}
+.button2:hover {
+    background-color: #92241c;
+}
