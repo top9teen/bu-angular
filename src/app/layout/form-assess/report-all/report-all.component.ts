@@ -229,7 +229,7 @@ export class ReportAllComponent implements OnInit {
 
       this.apiService.getDataMap(this.inspectionForm.value).subscribe(
         () => {
-          debugger;
+          // debugger;
           this.dataGoogleMapRespModel = this.inspectionModelModule._dataGoogleMapRespModel;
           this.dataGoogleDetails = this.dataGoogleMapRespModel.dataGoogleDetails;
           this.dataCriterionDetails = this.dataGoogleMapRespModel.dataCriterionDetails;

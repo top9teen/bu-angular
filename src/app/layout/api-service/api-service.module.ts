@@ -270,7 +270,7 @@ export class ApiServiceModule {
         .pipe(
           map(response => {
             if (response.data) {
-              debugger;
+              // debugger;
               this.inspectionModelModule.setCriterion(response.data);
               return of(true);
             } else {
@@ -308,7 +308,7 @@ export class ApiServiceModule {
       })
     };
     from(this.http.post<any>(_url, _body, _httpOptions).toPromise().then((res) => {
-      debugger;
+      // debugger;
       return res.data;
     }));
   }

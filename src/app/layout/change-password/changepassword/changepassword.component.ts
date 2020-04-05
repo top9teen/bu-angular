@@ -11,10 +11,10 @@ import { User,UserModel, UserService } from './../../../shared/guard/user.servic
 export class ChangepasswordComponent implements OnInit {
 
   constructor(
-    private router: Router, 
-    private userService: UserService, 
+    private router: Router,
+    private userService: UserService,
     private fb: FormBuilder,
-    private apiService: ApiServiceModule,) { 
+    private apiService: ApiServiceModule,) {
 
 
   }
@@ -26,7 +26,7 @@ export class ChangepasswordComponent implements OnInit {
 
   onSavePassword(){
     const obj = this.changePassword.value;
-    debugger;
+    // debugger;
     if(this.userService._userModel.passWord == obj.passWord){
       if(obj.passWordNew == obj.passWordOld){
         const jsondata = {

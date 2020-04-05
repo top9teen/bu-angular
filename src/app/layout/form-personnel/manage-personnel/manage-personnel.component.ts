@@ -47,14 +47,14 @@ export class ManagePersonnelComponent implements OnInit {
   //     const _url = `${Config.API_PROFILE_URL}get-profile-list-by-role/`+role;
   //     const _httpOptions = {
   //       headers: new HttpHeaders({
-  //          'Content-Type': 'application/json' 
+  //          'Content-Type': 'application/json'
   //       })
   //     };
   //     return this.http.get<any>(_url, _httpOptions)
   //       .pipe(
   //         map(response => {
   //           if (response.data) {
-  //             debugger;
+  //             // debugger;
   //             this.profileModelModule.setProfileList(response.data);
   //             return of(true);
   //           } else {

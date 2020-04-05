@@ -23,9 +23,9 @@ export class AddPersonnelComponent implements OnInit {
     private apiService :ApiServiceModule,
     private profileModelModule : ProfileModelModule,
     public router: Router) {
-      debugger;
+      // // // debugger;
       this.getProfile();
-     
+
   }
   public imagePath;
   imgURL: any;
@@ -40,29 +40,29 @@ export class AddPersonnelComponent implements OnInit {
       this.message = "Only images are supported.";
       return;
     }
- 
+
     var reader = new FileReader();
     this.imagePath = files;
-    reader.readAsDataURL(files[0]); 
-    reader.onload = (_event) => { 
-      this.imgURL = reader.result; 
+    reader.readAsDataURL(files[0]);
+    reader.onload = (_event) => {
+      this.imgURL = reader.result;
     }
-    
+
   }
 
   getProfile(){
-    debugger;
+    // // debugger;
     if("" != this.profileModelModule._userId && this.profileModelModule._userId != null && this.profileModelModule._userId != undefined){
-      this.showActions = false; 
+      this.showActions = false;
       this.apiService.getProfileByUserId(this.profileModelModule._userId).subscribe(
         () => {
-          debugger;
+          // // debugger;
           this.profileModel = this.profileModelModule._profileModel;
-          this.imgURL = this.profileModel.img; 
+          this.imgURL = this.profileModel.img;
         }, (err) => {
           console.log('error -> ', err);
         });
-    }  
+    }
   }
 
   profileForm: FormGroup= this.fb.group({
@@ -80,19 +80,19 @@ export class AddPersonnelComponent implements OnInit {
     province: this.fb.control('', Validators.required),
     postal: this.fb.control('', Validators.required),
     community: this.fb.control('', Validators.required),
-    
+
      userName: this.fb.control('', Validators.required),
      passWord: this.fb.control('', Validators.required),
      role: this.fb.control('', Validators.required),
      userId :this.fb.control('', Validators.required),
-    
+
   });
 
   ngOnInit() {
   }
 
   saveProfile(){
-    debugger;
+    // // debugger;
     const obj = this.profileForm.value;
     const jsondata = {
       cardId: obj.cardId,
@@ -102,22 +102,22 @@ export class AddPersonnelComponent implements OnInit {
       lastName: obj.lastName,
       phoneNo: obj.phoneNo,
       sex: obj.sex,
-  
+
       houseNo: obj.houseNo,
       subdistrict: obj.subdistrict,
       district: obj.district,
       province: obj.province,
       postal: obj.postal,
       community: obj.community,
-      
+
        userName: obj.userName,
        passWord: obj.passWord,
        role: obj.role,
        userId : obj.userId,
       'img':  this.imgURL
     }
-    debugger;
-    this.apiService.saveProfile(jsondata); 
+    // // debugger;
+    this.apiService.saveProfile(jsondata);
    // this.apiService.saveProfile(this.profileForm.value);
     this.profileModelModule._userId = '';
     this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(()=>
@@ -126,7 +126,7 @@ export class AddPersonnelComponent implements OnInit {
     // const _body = this.profileForm.value;
     // const _httpOptions = {
     //   headers: new HttpHeaders({
-    //      'Content-Type': 'application/json' 
+    //      'Content-Type': 'application/json'
     //   })
     // };
     // // return this.http.post<any>(_url, _body, _httpOptions)

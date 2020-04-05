@@ -83,7 +83,7 @@ export class AssessDiseaseComponent implements OnInit {
 
     console.log(jsondata);
     // var result = this.apiService.saveAssess(jsondata);
-    // debugger;
+    // // debugger;
     // this.inspectionModelModule._inspectionId = '';
     // this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(()=>
     // this.router.navigate(['/form-assess/manage-question']));
@@ -103,7 +103,7 @@ export class AssessDiseaseComponent implements OnInit {
   //     console.log(" Value is : ", (value.target as HTMLInputElement).value );
   //     console.log(" Name is : ", (value.target as HTMLInputElement).name );
   //     this.addData((value.target as HTMLInputElement).name ,(value.target as HTMLInputElement).value )
-  //     debugger;
+  //     // debugger;
   //     var d = document.getElementsByName("criterion_0");
   //  }
   ngOnInit() {

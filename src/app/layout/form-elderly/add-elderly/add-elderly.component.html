@@ -29,7 +29,7 @@
             <fieldset class="form-group">
                 <label>รหัสประจำตัวประชาชน</label>
                 <input type="text" class="form-control" formControlName="cardId"
-                    [ngModel]="profileModel != null ? profileModel.cardId : '' ">
+                    [ngModel]="profileModel != null ? profileModel.cardId : '' " maxlength="13">
             </fieldset>
             <fieldset class="form-group">
                 <label>ชื่อ</label>
