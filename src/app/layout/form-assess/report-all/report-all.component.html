@@ -59,7 +59,7 @@
           </div>
         </div>
 
-      
+
       <!-- <div>
         <button (click)="loadData()">ค้นหา</button>
       </div> -->
@@ -70,7 +70,7 @@
 
 </div>
 <agm-map [latitude]="lat" [zoom]="zoom" [longitude]="lng">
-  <agm-marker *ngFor="let m of dataGoogleDetails; let i = index" (markerClick)="clickedMarker(m.label, i)"
+  <agm-marker *ngFor="let m of dataGoogleDetails; let i = index"
     [latitude]="m.lat" [longitude]="m.lng" [label]="m.name" [iconUrl]="m.marker" (dragEnd)="markerDragEnd(m, $event)">
 
     <agm-info-window>

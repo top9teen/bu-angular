@@ -98,7 +98,7 @@ export class AssessDiseaseComponent implements OnInit {
       });
 
   }
-
+  // /form-assess/assess-disease
   //   onItemChange(value : Event){
   //     console.log(" Value is : ", (value.target as HTMLInputElement).value );
   //     console.log(" Name is : ", (value.target as HTMLInputElement).name );
@@ -106,6 +106,10 @@ export class AssessDiseaseComponent implements OnInit {
   //     // debugger;
   //     var d = document.getElementsByName("criterion_0");
   //  }
+  onBack() {
+    this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
+    this.router.navigate(['/form-assess/assess-disease']));
+  }
   ngOnInit() {
   }
 
