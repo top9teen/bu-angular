@@ -35,6 +35,7 @@ export class ChangepasswordComponent implements OnInit {
         }
         this.apiService.saveChangePassword(jsondata);
         this.userService._userModel.passWord = obj.passWordNew;
+        alert('เปลี่ยนรหัสผ่านสำเร็จ')
         this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(()=>
         this.router.navigate(['/home']));
       }else{
