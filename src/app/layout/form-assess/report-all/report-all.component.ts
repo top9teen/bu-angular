@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
 import { routerTransition } from 'src/app/router.animations';
 import { FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { ApiServiceModule } from '../../api-service/api-service.module';
@@ -9,6 +9,8 @@ import { AgmCoreModule } from '@agm/core';
 import { NgModule } from '@angular/core';
 import { MouseEvent } from '@agm/core';
 import * as Config from '../../../shared/config/constants';
+import { Subject } from 'rxjs';
+import { DataTableDirective } from 'angular-datatables';
 @Component({
   selector: 'app-report-all',
   templateUrl: './report-all.component.html',
@@ -27,7 +29,15 @@ import * as Config from '../../../shared/config/constants';
 })
 
 
-export class ReportAllComponent implements OnInit {
+export class ReportAllComponent  implements AfterViewInit, OnDestroy, OnInit {
+
+
+  @ViewChild('DataTableDirective') DataTableDirective;
+  dtElement: DataTableDirective;
+  dataTable: any;
+  dtOptions: DataTables.Settings = {};
+  dtTrigger = new Subject();
+
   constructor(
     private apiService: ApiServiceModule,
     private fb: FormBuilder,
@@ -225,22 +235,22 @@ export class ReportAllComponent implements OnInit {
       }, (err) => {
         console.log('error -> ', err);
       });
-
-
+      this.dataGoogleDetails = [];
       this.apiService.getDataMap(this.inspectionForm.value).subscribe(
         () => {
           // debugger;
           this.dataGoogleMapRespModel = this.inspectionModelModule._dataGoogleMapRespModel;
-          this.dataGoogleDetails = this.dataGoogleMapRespModel.dataGoogleDetails;
+          this.dataGoogleDetails = this.dataGoogleMapRespModel.dataGoogleDetails
           this.dataCriterionDetails = this.dataGoogleMapRespModel.dataCriterionDetails;
           this.pdfURL = Config.API_ASSESS_URL + 'print-report/';
+
+          this.ssss();
         }, (err) => {
           console.log('error -> ', err);
         });
 
 
   }
-
   // events
   public chartClicked(e: any): void {
     // console.log(e);
@@ -284,7 +294,37 @@ export class ReportAllComponent implements OnInit {
     this.polarAreaChartType = 'polarArea';
     this.lineChartLegend = true;
     this.lineChartType = 'line';
+
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10,
+    };
   }
+
+ssss(){
+  this.dtTrigger.next();
+  // this.dtElement.dtInstance.then.destroy();
+  // Call the dtTrigger to rerender again
+      // this.dtTrigger.unsubscribe();
+  // this.rerender();
+}
+  // ngAfterViewInit(): void {
+  //   this.dtTrigger.next();
+  // }
+
+  // ngOnDestroy(): void {
+  //   // Do not forget to unsubscribe the event
+  //   this.dtTrigger.unsubscribe();
+  // }
+
+  // rerender(): void {
+  //   this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
+  //     // Destroy the table first
+  //     dtInstance.destroy();
+  //     // Call the dtTrigger to rerender again
+  //     this.dtTrigger.next();
+  //   });
+  // }
 
 }
 

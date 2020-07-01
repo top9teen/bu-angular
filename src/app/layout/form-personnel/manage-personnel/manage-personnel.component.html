@@ -1,5 +1,5 @@
 <div class="head">
-<table datatable class="row-border hover">
+<table  datatable  [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
     <thead>
       <tr>
         <th>ชื่อบัญชี</th>
@@ -9,23 +9,15 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let profile of profileModels ; let i = index"> 
+      <tr *ngFor="let profile of profileModels ; let i = index">
         <td><span>{{profile.userName}}</span></td>
         <td><span>{{profile.fullName}}</span></td>
-        
         <td><span>{{profile.role}}</span></td>
         <td>
-
-          <!-- อันเก่า
-          <button (click)="onUpdateProfileElderly(profile.userId)" ><span>แก้ไข</span></button>
-          <button (click)="deleteProfile(profile.userId)"><span>ลบ</span></button> -->
-
           <div class="button">
               <button class="button button1" (click)="onUpdateProfileElderly(profile.userId)">แก้ไข</button>
               <button class="button button2" (click)="deleteProfile(profile.userId)">ลบ</button>
           </div>
-
-
         </td>
       </tr>
     </tbody>

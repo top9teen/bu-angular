@@ -1,6 +1,6 @@
 
 <div class="font">
-<table  datatable class="row-border hover">
+<table  datatable  [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
   <thead>
     <tr>
       <th style="width: 50%">โรค/คัดกรอง</th>
@@ -9,26 +9,15 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let inspection of inspectionModels ; let i = index" > 
+    <tr *ngFor="let inspection of inspectionModels ; let i = index" >
       <td><span>{{inspection.inspectionName}}</span></td>
       <td>
-
-        <!-- อันเก่า
-        <button (click)="onUpdateInspection(inspection.inspectionId)" ><span>แก้ไข</span></button>
-        <button (click)="onDeleteInspection(inspection.inspectionId)"><span>ลบ</span></button> -->
-
         <div class="button">
             <button class="button button1" (click)="onUpdateInspection(inspection.inspectionId)" >แก้ไข</button>
             <button class="button button2" (click)="onDeleteInspection(inspection.inspectionId)">ลบ</button>
         </div>
-
       </td>
       <td>
-
-        <!-- อันเก่า
-        <button (click)="onManageQuestion(inspection.inspectionId)" ><span>จัดการแบบสอบถาม</span></button>
-        <button (click)="onAddEvaluation(inspection.inspectionId)"><span>จักการเกณฑ์การประเมิน</span></button> -->
-
         <div class="button">
             <button class="button button3" (click)="onManageQuestion(inspection.inspectionId)" >จัดการข้อมูลคำถาม</button>
             <button class="button button4" (click)="onAddEvaluation(inspection.inspectionId)">จักการเกณฑ์การประเมิน</button>
@@ -39,6 +28,3 @@
   </tbody>
 </table>
 </div>
-<!-- <nz-table #ajaxTable nzShowSizeChanger [nzFrontPagination]="false" [nzData]="pndList" [nzTotal]="total" [(nzPageIndex)]="pageIndex"
-                                                [(nzPageSize)]="pageSize" [nzPageSizeOptions]="[5,10,20,30]" (nzPageIndexChange)="searchData()" (nzPageSizeChange)="searchData(true)">
-                                                 -->

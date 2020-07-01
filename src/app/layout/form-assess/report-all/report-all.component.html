@@ -85,29 +85,11 @@
   <!-- <img src="assets/images/marker-green.png" alt=""> -->
   <label>{{obj.criterDetail}}</label>
 </div>
-<!-- <br> -->
-<!-- <div class="row">
-  <div class="col-lg-2"></div>
-  <div class="col col-sm-8">
-    <div class="card mb-3">
-      <div class="card-header">
-        ผลการประเมิน
-      </div>
-      <div class="card-body">
-        <canvas baseChart [datasets]="barChartData" [labels]="barChartLabels" [options]="barChartOptions"
-          [legend]="barChartLegend" [chartType]="barChartType" (chartHover)="chartHovered($event)"
-          (chartClick)="chartClicked($event)">
-        </canvas>
-      </div>
-    </div>
-  </div>
-  <div class="col-lg-2"></div>
-</div> -->
 <br>
 <hr>
 <br>
 <div>
-  <table datatable class="row-border hover">
+  <table datatable  [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
     <thead>
       <tr>
         <th>ลำดับ</th>
