@@ -1,16 +1,13 @@
-import { Component, OnInit, ViewChild, AfterViewInit, OnDestroy } from '@angular/core';
-import { routerTransition } from 'src/app/router.animations';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { ApiServiceModule } from '../../api-service/api-service.module';
-import { InspectionModel, InspectionModelModule, QuestionModel, ChoiceModel, AssessmentGroupModel, DataGoogleMapRespModel, DataCriterionDetail, DataGoogleDetail } from '../../model/inspection-model/inspection-model';
+import { AgmCoreModule, MouseEvent } from '@agm/core';
+import { Component, NgModule, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { AgmMap, AgmMarker } from '@agm/core';
-import { AgmCoreModule } from '@agm/core';
-import { NgModule } from '@angular/core';
-import { MouseEvent } from '@agm/core';
-import * as Config from '../../../shared/config/constants';
-import { Subject } from 'rxjs';
 import { DataTableDirective } from 'angular-datatables';
+import { Subject } from 'rxjs';
+import { routerTransition } from 'src/app/router.animations';
+import * as Config from '../../../shared/config/constants';
+import { ApiServiceModule } from '../../api-service/api-service.module';
+import { AssessmentGroupModel, DataCriterionDetail, DataGoogleDetail, DataGoogleMapRespModel, InspectionModel, InspectionModelModule } from '../../model/inspection-model/inspection-model';
 @Component({
   selector: 'app-report-all',
   templateUrl: './report-all.component.html',
@@ -29,7 +26,7 @@ import { DataTableDirective } from 'angular-datatables';
 })
 
 
-export class ReportAllComponent  implements AfterViewInit, OnDestroy, OnInit {
+export class ReportAllComponent  implements  OnInit {
 
 
   @ViewChild('DataTableDirective') DataTableDirective;
@@ -217,24 +214,24 @@ export class ReportAllComponent  implements AfterViewInit, OnDestroy, OnInit {
   }
   public loadData(): void {
     this.barChartLabels = [];
-    this.apiService.getAssessByInspecionAndDate(this.inspectionForm.value).subscribe(
-      () => {
-        this.assessModels = this.inspectionModelModule._assessmentGroupModel;
-        const data = [];
-        const label = [];
-        for (let i = 0; i < this.assessModels.length; i++) {
-          const d = this.assessModels[this.assessModels.length - (i + 1)].count;
-          const lab: String = this.assessModels[this.assessModels.length - (i + 1)].community;
-          data.push(d);
-          this.barChartLabels.push(String(lab));
+    // this.apiService.getAssessByInspecionAndDate(this.inspectionForm.value).subscribe(
+    //   () => {
+    //     this.assessModels = this.inspectionModelModule._assessmentGroupModel;
+    //     const data = [];
+    //     const label = [];
+    //     for (let i = 0; i < this.assessModels.length; i++) {
+    //       const d = this.assessModels[this.assessModels.length - (i + 1)].count;
+    //       const lab: String = this.assessModels[this.assessModels.length - (i + 1)].community;
+    //       data.push(d);
+    //       this.barChartLabels.push(String(lab));
 
-        }
-        const clone = JSON.parse(JSON.stringify(this.barChartData));
-        clone[0].data = data;
-        this.barChartData = clone;
-      }, (err) => {
-        console.log('error -> ', err);
-      });
+    //     }
+    //     const clone = JSON.parse(JSON.stringify(this.barChartData));
+    //     clone[0].data = data;
+    //     this.barChartData = clone;
+    //   }, (err) => {
+    //     console.log('error -> ', err);
+    //   });
       this.dataGoogleDetails = [];
       this.apiService.getDataMap(this.inspectionForm.value).subscribe(
         () => {
@@ -244,7 +241,7 @@ export class ReportAllComponent  implements AfterViewInit, OnDestroy, OnInit {
           this.dataCriterionDetails = this.dataGoogleMapRespModel.dataCriterionDetails;
           this.pdfURL = Config.API_ASSESS_URL + 'print-report/';
 
-          this.ssss();
+          this.reloadData();
         }, (err) => {
           console.log('error -> ', err);
         });
@@ -294,38 +291,17 @@ export class ReportAllComponent  implements AfterViewInit, OnDestroy, OnInit {
     this.polarAreaChartType = 'polarArea';
     this.lineChartLegend = true;
     this.lineChartType = 'line';
-
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 10,
-    };
   }
 
-ssss(){
-  this.dtTrigger.next();
-  // this.dtElement.dtInstance.then.destroy();
-  // Call the dtTrigger to rerender again
-      // this.dtTrigger.unsubscribe();
-  // this.rerender();
-}
-  // ngAfterViewInit(): void {
-  //   this.dtTrigger.next();
-  // }
+  async reloadData(){
+      this.dtOptions = {
+        pagingType: 'full_numbers',
+        pageLength: 10,
+      };
 
-  // ngOnDestroy(): void {
-  //   // Do not forget to unsubscribe the event
-  //   this.dtTrigger.unsubscribe();
-  // }
-
-  // rerender(): void {
-  //   this.dtElement.dtInstance.then((dtInstance: DataTables.Api) => {
-  //     // Destroy the table first
-  //     dtInstance.destroy();
-  //     // Call the dtTrigger to rerender again
-  //     this.dtTrigger.next();
-  //   });
-  // }
-
+      this.dtTrigger.next();
+      this.dtTrigger.complete();
+  }
 }
 
 interface marker {

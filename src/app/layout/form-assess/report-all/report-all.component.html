@@ -53,10 +53,11 @@
         </div>
       </div>
         <div class="col-lg-1">
-          <div class="button">
-            <a class="button button1" (click)="loadData()">ค้นหา</a>
-
-          </div>
+          <button class="button button1" [ngStyle]="{'cursor':inspectionForm.controls['inspectionId'].value === '' ? 'not-allowed' : 'pointer' }"
+          [disabled]= "inspectionForm.controls['inspectionId'].value ==''"  title="กรุณาเลือก หัวข้อ โรค " (click)="loadData()">ค้นหา</button>
+          <!-- <div class="button">
+            <a class="button button1"  (click)="loadData()">ค้นหา</a>
+          </div> -->
         </div>
 
 
