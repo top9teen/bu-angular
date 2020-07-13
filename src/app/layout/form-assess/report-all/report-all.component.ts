@@ -2,7 +2,6 @@ import { AgmCoreModule, MouseEvent } from '@agm/core';
 import { Component, NgModule, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
-import { DataTableDirective } from 'angular-datatables';
 import { Subject } from 'rxjs';
 import { routerTransition } from 'src/app/router.animations';
 import * as Config from '../../../shared/config/constants';
@@ -27,10 +26,6 @@ import { AssessmentGroupModel, DataCriterionDetail, DataGoogleDetail, DataGoogle
 
 
 export class ReportAllComponent  implements  OnInit {
-
-
-  @ViewChild('DataTableDirective') DataTableDirective;
-  dtElement: DataTableDirective;
   dataTable: any;
   dtOptions: DataTables.Settings = {};
   dtTrigger = new Subject();

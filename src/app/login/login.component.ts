@@ -15,8 +15,8 @@ import { AuthService } from '../shared/guard/auth.service';
 export class LoginComponent implements OnInit {
 
   loginForm: FormGroup= this.fb.group({
-    username: this.fb.control('admin', Validators.required),
-    password: this.fb.control('admin', Validators.required)
+    username: this.fb.control('', Validators.required),
+    password: this.fb.control('', Validators.required)
   });
 
   constructor(
@@ -61,5 +61,5 @@ export class LoginComponent implements OnInit {
     // }
   }
 
-  
+
 }

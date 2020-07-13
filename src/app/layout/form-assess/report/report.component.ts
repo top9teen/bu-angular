@@ -5,6 +5,8 @@ import { ApiServiceModule } from '../../api-service/api-service.module';
 import { InspectionModel, InspectionModelModule, QuestionModel, CriterionRespModel , AssessModel, CriterionModel} from '../../model/inspection-model/inspection-model';
 import { Router } from '@angular/router';
 import * as Config from '../../../shared/config/constants';
+import { Subject } from 'rxjs';
+import { Response, Http } from '@angular/http';
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
@@ -12,16 +14,22 @@ import * as Config from '../../../shared/config/constants';
   animations: [routerTransition()]
 })
 export class ReportComponent implements OnInit {
+
+  dataTable: any;
+  dtOptions: DataTables.Settings = {};
+  dtTrigger = new Subject();
+
   constructor(
     private apiService: ApiServiceModule,
     private fb: FormBuilder,
     private inspectionModelModule: InspectionModelModule,
-    public router: Router) {
+    public router: Router,
+    private http: Http) {
       this.onLoadData();
       this.pdfURL =  Config.API_ASSESS_URL + 'print-report/';
   }
   inspectionModels?: Array<InspectionModel> = [];
-  assessModels?: Array<AssessModel> = [];
+  assessModels: AssessModel[] = [];
   inspectionId?: String;
   pdfURL?: String;
 
@@ -152,12 +160,22 @@ public lineChartType: string;
       }, (err) => {
         console.log('error -> ', err);
       });
+
   }
 
   onLoadDataAssess() {
 
   }
 
+  async reloadData(){
+    this.dtOptions = {
+      pagingType: 'full_numbers',
+      pageLength: 10,
+    };
+
+    this.dtTrigger.next();
+    this.dtTrigger.complete();
+}
 
   getCriterion() {
       this.apiService.getCriterionByInspectionId(this.inspectionId).subscribe(
@@ -172,26 +190,46 @@ public lineChartType: string;
 
   public loadData(): void {
     this.barChartLabels = [];
+    this.assessModels  = [];
     this.inspectionId = this.inspectionForm.value.inspectionId;
     const userId = localStorage.getItem('userId');
-    this.apiService.getAssess(userId, this.inspectionId).subscribe(
-      () => {
-        this.assessModels = this.inspectionModelModule._assessModel;
-        const data = [];
-        const label = [];
-        for (let i = 0; i < this.assessModels.length; i++) {
-           const d = this.assessModels[this.assessModels.length - (i + 1)].criterionTotal;
-           const lab: String = this.assessModels[this.assessModels.length - (i + 1)].createDate;
-           data.push(d);
-           this.barChartLabels.push(String(lab));
 
-        }
-        const clone = JSON.parse(JSON.stringify(this.barChartData));
-        clone[0].data = data;
-        this.barChartData = clone;
-      }, (err) => {
-        console.log('error -> ', err);
-      });
+    this.http.get(Config.API_ASSESS_URL + 'get-assessment-by-userId/'  + userId +'/'+ this.inspectionId)
+    .subscribe(persons => {
+      // this.inspectionModelModule.setAssessModel(persons);
+      this.assessModels = this.extractData(persons);
+      this.reloadData();
+      for (let i = 0; i < this.assessModels.length; i++) {
+         const lab: String = this.assessModels[this.assessModels.length - (i + 1)].createDate;
+         this.barChartLabels.push(String(lab));
+
+      }
+      const clone = JSON.parse(JSON.stringify(this.barChartData));
+
+      this.barChartData = clone;
+    }, (err) => {
+    console.log('error -> ', err);
+    });
+
+
+    // this.apiService.getAssess(userId, this.inspectionId).subscribe(
+    //   () => {
+    //     this.assessModels = this.inspectionModelModule._assessModel;
+    //     const data = [];
+    //     const label = [];
+    //     for (let i = 0; i < this.assessModels.length; i++) {
+    //        const d = this.assessModels[this.assessModels.length - (i + 1)].criterionTotal;
+    //        const lab: String = this.assessModels[this.assessModels.length - (i + 1)].createDate;
+    //        data.push(d);
+    //        this.barChartLabels.push(String(lab));
+
+    //     }
+    //     const clone = JSON.parse(JSON.stringify(this.barChartData));
+    //     clone[0].data = data;
+    //     this.barChartData = clone;
+    //   }, (err) => {
+    //     console.log('error -> ', err);
+    //   });
       this.getCriterion();
 }
 
@@ -227,6 +265,38 @@ public randomize(): void {
 }
 
 
+getAssess(userId: String, inspectionId: String) {
+  // const _url = `${Config.API_ASSESS_URL}get-assessment-by-userId/` + userId + '/' + inspectionId;
+  // const _httpOptions = {
+  //   headers: new HttpHeaders({
+  //     'Content-Type': 'application/json'
+  //   })
+  // };
+  // return this.http.get<any>(_url, _httpOptions)
+  //   .pipe(
+  //     map(response => {
+  //       if (response.data) {
+  //         this.inspectionModelModule.setAssessModel(response.data);
+  //         return of(true);
+  //       } else {
+  //         throw throwError(Config.ERROR_001);
+  //       }
+  //     }),
+  //     catchError(error => {
+  //       return throwError(error);
+  //     })
+  //   );
+
+   return this.http.get(Config.API_ASSESS_URL + '/get-profile-list-by-role/' + '3')
+    .subscribe(persons => {
+      this.inspectionModelModule.setAssessModel(persons);
+  });
+}
+
+extractData(res: Response) {
+  const body = res.json();
+  return body.data || {};
+}
 
 ngOnInit() {
     this.barChartType = 'bar';
@@ -239,4 +309,6 @@ ngOnInit() {
     this.lineChartLegend = true;
     this.lineChartType = 'line';
 }
+
+
 }

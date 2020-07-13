@@ -23,6 +23,7 @@ export class ApiServiceModule {
   redirectUrl: string;
   constructor(
     private http: HttpClient,
+
     private profileModelModule: ProfileModelModule,
     private inspectionModelModule: InspectionModelModule,
     private homeModel: HomeModel,
