@@ -23,6 +23,8 @@ export class AddElderlyComponent implements OnInit {
       this.getProfile();
 
   }
+  // lat;
+  // lng;
   lat = 14.633426;
   lng = 102.794541;
   zoom = 15;
@@ -60,7 +62,8 @@ export class AddElderlyComponent implements OnInit {
   markers: marker[] = [];
 
   mapClicked($event: MouseEvent) {
-    console.log($event.coords.lat, $event.coords.lng);
+    // console.log(Location.);
+    // console.log($event.coords.lat, $event.coords.lng);
       this.lat = $event.coords.lat;
       this.lng = $event.coords.lng;
   }

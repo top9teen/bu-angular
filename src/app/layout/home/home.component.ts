@@ -16,7 +16,7 @@ export class HomeComponent implements OnInit {
     public alerts: Array<any> = [];
     public sliders: Array<any> = [];
     public userModeil: UserModel;
-    public role: String;
+    public role: any;
     public sumInspectionModels: Array<SumInspectionModel> = [];
     public countUserTotal: String;
     constructor(

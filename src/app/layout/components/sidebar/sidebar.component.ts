@@ -10,7 +10,7 @@ import { UserService ,UserModel,MenuMain} from '../../../shared/guard/user.servi
 export class SidebarComponent implements OnInit {
     isActive: boolean;
     collapsed: boolean;
-    showMenu: string;
+    showMenu: any;
     pushRightClass: string;
     menuMains: Array<MenuMain> = [];
     @Output() collapsedEvent = new EventEmitter<boolean>();
@@ -40,7 +40,7 @@ export class SidebarComponent implements OnInit {
         this.router.events.subscribe(val => {
             if (val instanceof NavigationEnd &&
                 window.innerWidth <= 992 && this.isToggled()
-                
+
             ) {
                 this.toggleSidebar();
             }

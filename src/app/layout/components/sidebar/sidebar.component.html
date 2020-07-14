@@ -2,7 +2,7 @@
     [ngClass]="{sidebarPushRight: isActive, collapsed: collapsed}">
     <link href="https://fonts.googleapis.com/css?family=Prompt&display=swap" rel="stylesheet">
 	<div class="list-group">
-		<div *ngFor="let menuMain of menuMains ; let i = index">		
+		<div *ngFor="let menuMain of menuMains ; let i = index">
 				<div *ngIf="menuMain.menuSubs?.length != 0" class="nested-menu">
                     <a class="list-group-item"  [routerLinkActive]="['router-link-active']"
                     (click)="addExpandClass(i)"> <i
@@ -33,7 +33,7 @@
 			class="list-group-item"> <i class="fa fa-user"></i>&nbsp; <span>{{
 				'จัดการข้อมูลผู้สูงอายุ' | translate }}</span>
 		</a> -->
-		<div class="header-fields">
+		<!-- <div class="header-fields">
             <a (click)="rltAndLtr()" class="list-group-item">
                 <span><i class="fa fa-arrows-h"></i>&nbsp; RTL/LTR</span>
             </a>
@@ -110,7 +110,7 @@
                     </ul>
                 </li>
             </div>
-        </div>
+        </div> -->
     </div>
     <div class="toggle-button" [ngClass]="{collapsed: collapsed}" (click)="toggleCollapsed()">
         <i class="fa fa-fw fa-angle-double-left"></i>&nbsp;

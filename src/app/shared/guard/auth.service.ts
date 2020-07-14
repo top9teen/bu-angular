@@ -11,10 +11,10 @@ export class AuthService {
     redirectUrl: string;
     isLoggedIn: Boolean = false;
     constructor(
-      private http: HttpClient, 
-      private router: Router, 
+      private http: HttpClient,
+      private router: Router,
       private userService: UserService,
-      private profileModelModule:ProfileModelModule) { 
+      private profileModelModule:ProfileModelModule) {
 
       }
 
@@ -22,7 +22,7 @@ export class AuthService {
         if (this.isLoggedIn) {
           return of(true);
         }
-    
+
         if (user.username !== '' && user.password !== '') {
           const _url = `${Config.API_PROFILE_URL}login/`;
           // const _body = `userName=${user.username}&passWord=${user.password}`;
@@ -36,7 +36,7 @@ export class AuthService {
             'passWord' : user.password};
           const _httpOptions = {
             headers: new HttpHeaders({
-               'Content-Type': 'application/json' 
+               'Content-Type': 'application/json'
             })
           };
           return this.http.post<any>(_url, _body, _httpOptions)
@@ -69,7 +69,7 @@ export class AuthService {
           const _url = `${Config.API_PROFILE_URL}reLogin/` + userId;
           const _httpOptions = {
             headers: new HttpHeaders({
-               'Content-Type': 'application/json' 
+               'Content-Type': 'application/json'
             })
           };
           return this.http.get<any>(_url, _httpOptions)
@@ -106,10 +106,10 @@ export class AuthService {
         const userId = localStorage.getItem(Config.USER_ID_KEY);
         if (userId) {
           if (this.isLoggedIn) {
-            console.log('AuthService.checkAuthen [UserId is expired ? false] => redirectPage()');
+            // console.log('AuthService.checkAuthen [UserId is expired ? false] => redirectPage()');
             this.redirectPage();
           } else {
-            console.log('AuthService.checkAuthen [UserId is expired ? true] => reLogin()');
+            // console.log('AuthService.checkAuthen [UserId is expired ? true] => reLogin()');
             this.reLogin(userId).subscribe(
               () => {
                 if (this.isLoggedIn) {
