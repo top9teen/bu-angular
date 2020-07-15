@@ -19,8 +19,8 @@ export const AUTH_KEY = '123';
 // profile
   // export const API_PROFILE_URL = `http://192.168.1.105:8772/profile/`;
   // export const API_ASSESS_URL = `http://192.168.1.105:8772/assess/`;
-  export const API_PROFILE_URL = `http://localhost:8080/profile/`;
-  export const API_ASSESS_URL = `http://localhost:8080/assess/`;
+  export const API_PROFILE_URL = `http://103.22.183.133:8080/server/profile/`;
+  export const API_ASSESS_URL = `http://103.22.183.133:8080/server/assess/`;
   export const USER_ID_KEY = 'userId';
   export const USER_MODEL_KEY = 'userModel';
   export const USER_MODEL_KEYT = 'userModel';
