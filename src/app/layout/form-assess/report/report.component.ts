@@ -193,7 +193,7 @@ public lineChartType: string;
     this.assessModels  = [];
     this.inspectionId = this.inspectionForm.value.inspectionId;
     const userId = localStorage.getItem('userId');
-
+    const data = [];
     this.http.get(Config.API_ASSESS_URL + 'get-assessment-by-userId/'  + userId +'/'+ this.inspectionId)
     .subscribe(persons => {
       // this.inspectionModelModule.setAssessModel(persons);
@@ -201,11 +201,12 @@ public lineChartType: string;
       this.reloadData();
       for (let i = 0; i < this.assessModels.length; i++) {
          const lab: String = this.assessModels[this.assessModels.length - (i + 1)].createDate;
+         const d = this.assessModels[this.assessModels.length - (i + 1)].criterionTotal;
          this.barChartLabels.push(String(lab));
-
+         data.push(d);
       }
       const clone = JSON.parse(JSON.stringify(this.barChartData));
-
+      clone[0].data = data;
       this.barChartData = clone;
     }, (err) => {
     console.log('error -> ', err);
@@ -229,8 +230,8 @@ public lineChartType: string;
     //     this.barChartData = clone;
     //   }, (err) => {
     //     console.log('error -> ', err);
-    //   });
-      this.getCriterion();
+    // //   });
+    //   this.getCriterion();
 }
 
 // events
