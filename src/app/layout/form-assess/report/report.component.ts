@@ -1,12 +1,13 @@
-import { Component, OnInit } from '@angular/core';
-import { routerTransition } from 'src/app/router.animations';
-import { FormGroup, Validators, FormBuilder } from '@angular/forms';
-import { ApiServiceModule } from '../../api-service/api-service.module';
-import { InspectionModel, InspectionModelModule, QuestionModel, CriterionRespModel , AssessModel, CriterionModel} from '../../model/inspection-model/inspection-model';
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Http, Response } from '@angular/http';
 import { Router } from '@angular/router';
+import { routerTransition } from 'src/app/router.animations';
 import * as Config from '../../../shared/config/constants';
-import { Subject } from 'rxjs';
-import { Response, Http } from '@angular/http';
+import { ApiServiceModule } from '../../api-service/api-service.module';
+import { AssessModel, CriterionModel, CriterionRespModel, InspectionModel, InspectionModelModule } from '../../model/inspection-model/inspection-model';
+import { ReportInfoService } from '../feature/info/report-info.service';
+import { ReportFeatureComponent } from '../feature/report-feature/report-feature.component';
 @Component({
   selector: 'app-report',
   templateUrl: './report.component.html',
@@ -15,15 +16,14 @@ import { Response, Http } from '@angular/http';
 })
 export class ReportComponent implements OnInit {
 
-  dataTable: any;
-  dtOptions: DataTables.Settings = {};
-  dtTrigger = new Subject();
+  @ViewChild(ReportFeatureComponent) reportFeatureComponent: ReportFeatureComponent;
 
   constructor(
     private apiService: ApiServiceModule,
     private fb: FormBuilder,
     private inspectionModelModule: InspectionModelModule,
     public router: Router,
+    public reportInfoService :ReportInfoService,
     private http: Http) {
       this.onLoadData();
       this.pdfURL =  Config.API_ASSESS_URL + 'print-report/';
@@ -163,20 +163,6 @@ public lineChartType: string;
 
   }
 
-  onLoadDataAssess() {
-
-  }
-
-  async reloadData(){
-    this.dtOptions = {
-      pagingType: 'full_numbers',
-      pageLength: 10,
-    };
-
-    this.dtTrigger.next();
-    this.dtTrigger.complete();
-}
-
   getCriterion() {
       this.apiService.getCriterionByInspectionId(this.inspectionId).subscribe(
         () => {
@@ -198,40 +184,21 @@ public lineChartType: string;
     .subscribe(persons => {
       // this.inspectionModelModule.setAssessModel(persons);
       this.assessModels = this.extractData(persons);
-      this.reloadData();
+
       for (let i = 0; i < this.assessModels.length; i++) {
          const lab: String = this.assessModels[this.assessModels.length - (i + 1)].createDate;
          const d = this.assessModels[this.assessModels.length - (i + 1)].criterionTotal;
          this.barChartLabels.push(String(lab));
          data.push(d);
       }
+      this.reportInfoService.setDataInfo(this.assessModels);
+      this.reportFeatureComponent.ngOnInit();
       const clone = JSON.parse(JSON.stringify(this.barChartData));
       clone[0].data = data;
       this.barChartData = clone;
     }, (err) => {
     console.log('error -> ', err);
     });
-
-
-    // this.apiService.getAssess(userId, this.inspectionId).subscribe(
-    //   () => {
-    //     this.assessModels = this.inspectionModelModule._assessModel;
-    //     const data = [];
-    //     const label = [];
-    //     for (let i = 0; i < this.assessModels.length; i++) {
-    //        const d = this.assessModels[this.assessModels.length - (i + 1)].criterionTotal;
-    //        const lab: String = this.assessModels[this.assessModels.length - (i + 1)].createDate;
-    //        data.push(d);
-    //        this.barChartLabels.push(String(lab));
-
-    //     }
-    //     const clone = JSON.parse(JSON.stringify(this.barChartData));
-    //     clone[0].data = data;
-    //     this.barChartData = clone;
-    //   }, (err) => {
-    //     console.log('error -> ', err);
-    // //   });
-    //   this.getCriterion();
 }
 
 // events
@@ -267,27 +234,6 @@ public randomize(): void {
 
 
 getAssess(userId: String, inspectionId: String) {
-  // const _url = `${Config.API_ASSESS_URL}get-assessment-by-userId/` + userId + '/' + inspectionId;
-  // const _httpOptions = {
-  //   headers: new HttpHeaders({
-  //     'Content-Type': 'application/json'
-  //   })
-  // };
-  // return this.http.get<any>(_url, _httpOptions)
-  //   .pipe(
-  //     map(response => {
-  //       if (response.data) {
-  //         this.inspectionModelModule.setAssessModel(response.data);
-  //         return of(true);
-  //       } else {
-  //         throw throwError(Config.ERROR_001);
-  //       }
-  //     }),
-  //     catchError(error => {
-  //       return throwError(error);
-  //     })
-  //   );
-
    return this.http.get(Config.API_ASSESS_URL + '/get-profile-list-by-role/' + '3')
     .subscribe(persons => {
       this.inspectionModelModule.setAssessModel(persons);
@@ -300,6 +246,7 @@ extractData(res: Response) {
 }
 
 ngOnInit() {
+    this.reportInfoService.setDataInfo(null);
     this.barChartType = 'bar';
     this.barChartLegend = true;
     this.doughnutChartType = 'doughnut';
@@ -309,6 +256,7 @@ ngOnInit() {
     this.polarAreaChartType = 'polarArea';
     this.lineChartLegend = true;
     this.lineChartType = 'line';
+
 }
 
 

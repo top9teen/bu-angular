@@ -16,15 +16,6 @@
           </option>
         </select>
       </div>
-      <div class="col-lg-2.5">
-        <input type="date" class="form-control" formControlName="dateStart">
-      </div>
-      <div class="col-lg-1">
-        <label style="text-align: center;">&nbsp; &nbsp;ถึง</label>
-      </div>
-      <div class="col-lg-2.5">
-        <input type="date" class="form-control" formControlName="dateEnd">
-      </div>
       <div class="col-lg-2">
         <div class="form-group">
           <select class="form-control" formControlName="community" [ngModel]="community != null ? community : '' ">
@@ -52,9 +43,29 @@
           </select>
         </div>
       </div>
+      <div class="col-lg-1">
+        <div class="form-group">
+          <select class="form-control" formControlName="lavel" [ngModel]="lavel != null ? lavel : '' ">
+            <option value="">-ระดับ-</option>
+            <option value="1">1</option>
+            <option value="2">2</option>
+            <option value="3">3</option>
+            <option value="4">4</option>
+            <option value="5">5</option>
+          </select>
+        </div>
+      </div>
+      <div class="col-lg-2">
+        <input type="date" class="form-control" formControlName="dateStart">
+      </div>
+      <div>
+        <label style="text-align: center;">ถึง</label>
+      </div>
+      <div class="col-lg-2">
+        <input type="date" class="form-control" formControlName="dateEnd">
+      </div>
         <div class="col-lg-1">
-          <button class="button button1" [ngStyle]="{'cursor':inspectionForm.controls['inspectionId'].value === '' ? 'not-allowed' : 'pointer' }"
-          [disabled]= "inspectionForm.controls['inspectionId'].value ==''"  title="กรุณาเลือก หัวข้อ โรค " (click)="loadData()">ค้นหา</button>
+          <button class="button button1" (click)="loadData()">ค้นหา</button>
           <!-- <div class="button">
             <a class="button button1"  (click)="loadData()">ค้นหา</a>
           </div> -->
@@ -67,6 +78,7 @@
 
     </div>
   </form>
+
   <br>
 
 </div>
@@ -83,35 +95,9 @@
 <br>
 <div *ngFor="let obj of dataCriterionDetails;">
   <img src="{{obj.marker}}">
-  <!-- <img src="assets/images/marker-green.png" alt=""> -->
   <label>{{obj.criterDetail}}</label>
 </div>
 <br>
 <hr>
 <br>
-<div>
-  <table datatable  [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
-    <thead>
-      <tr>
-        <th>ลำดับ</th>
-        <th>ชื่อ - สกุล</th>
-        <th>ผลการประเมิน</th>
-        <th>ชุมชน</th>
-        <th>ปริ้นรายงาน</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let obj of dataGoogleDetails ; let i = index">
-        <td><span>{{i + 1}}</span></td>
-        <td><span>{{obj.name}}</span></td>
-        <td><span>{{obj.assessmentDetail}}</span></td>
-        <td><span>{{obj.community}}</span></td>
-        <td>
-          <div class="button">
-            <a class="button button1" href="{{pdfURL}}{{obj.assessmentId}}" target="_blank">Report</a>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<app-reportall-feature></app-reportall-feature>

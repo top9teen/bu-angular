@@ -170,6 +170,8 @@ export class DataGoogleDetail {
   assessmentId: String;
   assessmentDetail: String;
   community: String;
+  lavel: String;
+  inspectionsName: string;
 }
 
 export class DataCriterionDetail {

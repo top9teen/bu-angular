@@ -35,9 +35,6 @@
             (chartClick)="chartClicked($event)">
           </canvas>
         </div>
-        <!-- <div class="card-footer">
-                  <button class="btn btn-info btn-sm" (click)="randomize()">Update</button>
-              </div> -->
       </div>
     </div>
     <div class="col-lg-2"></div>
@@ -49,43 +46,9 @@
     <div class="col-lg-1"><label>คะแนน</label></div>
     <div class="col-lg-2"><label>{{obj.criterionStart}}<span style="padding: 10px;">  ถึง  </span>{{obj.criterionEnd}}  </label></div>
     <div class="col-lg-7"><label>{{obj.criterionDetail}}</label></div>
-    <!-- <div class="col-lg-1">
-      <label></label>
-    </div>
-    <div class="col-lg-1" style="text-align: center;"><label>ถึง</label></div>
-    <div class="col-lg-1">
-      <label></label>
-    </div>
-    <div class="col-lg-8">
-      <label></label>
-    </div> -->
   </div>
   <br>
 </div>
 
 <hr>
-
-<div>
-  <table datatable  [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
-    <thead>
-      <tr>
-        <th>ลำดับ</th>
-        <th>วันที่</th>
-        <th>ผลการประเมิน</th>
-        <th>ปริ้นรายงาน</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let obj of assessModels ; let i = index">
-        <td><span>{{i + 1}}</span></td>
-        <td><span>{{obj.createDate}}</span></td>
-        <td><span>{{obj.assessmentDetail}}</span></td>
-        <td>
-          <div class="button">
-            <a class="button button1" href="{{pdfURL}}{{obj.assessmentId}}" target="_blank">Report</a>
-          </div>
-        </td>
-      </tr>
-    </tbody>
-  </table>
-</div>
+<app-report-feature></app-report-feature>

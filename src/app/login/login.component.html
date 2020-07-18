@@ -14,7 +14,7 @@
                         <input type="password" class="form-control input-underline input-lg" placeholder="Password" formControlName="password">
                     </div>
                 </div>
-                <a class="btn rounded-btn" [routerLink]="['/home']" (click)="onLoggedin()">{{ 'Log in' | translate }}</a>
+                <button class="btn rounded-btn" [routerLink]="['/home']" (click)="onLoggedin()">{{ 'Log in' | translate }}</button>
                 &nbsp;
                 <!-- <a class="btn rounded-btn" [routerLink]="['/signup']">{{ 'Register' | translate }}</a> -->
             </form>

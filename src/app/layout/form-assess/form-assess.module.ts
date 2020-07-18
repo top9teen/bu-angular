@@ -17,17 +17,38 @@ import { ReportComponent } from './report/report.component';
 import { ChartsModule as Ng2Charts } from 'ng2-charts';
 import { ReportAllComponent } from './report-all/report-all.component';
 import { AgmCoreModule } from '@agm/core';
+import { ReportInfoService } from './feature/info/report-info.service';
+import { DataTablesModule } from 'angular-datatables';
+import { ReportFeatureComponent } from './feature/report-feature/report-feature.component';
+import { ReportallFeatureComponent } from './feature/reportall-feature/reportall-feature.component';
 @NgModule({
   imports: [CommonModule,
     FormAssessRoutingModule,
     PageHeaderModule,
+    DataTablesModule,
      SharedModule,
       FormSharedModule,
       Ng2Charts,
       AgmCoreModule.forRoot({
        apiKey: 'AIzaSyA7X9xHkQYWB9cD2XK088A_VT_CE4vCsQM'
-  })
+  }),
 ],
-  declarations: [ManageInspectionComponent, AddInspectionComponent, ManageQuestionComponent, AddQuestionComponent, AssessDiseaseComponent, AddEvaluationComponent, AssessMentComponent, ReportComponent, ReportAllComponent],
+  declarations: [ManageInspectionComponent,
+    AddInspectionComponent,
+    ManageQuestionComponent,
+    AddQuestionComponent,
+    AssessDiseaseComponent,
+    AddEvaluationComponent,
+    AssessMentComponent,
+    ReportComponent,
+    ReportAllComponent,
+    ReportFeatureComponent,
+    ReportallFeatureComponent,
+  ],
+  providers: [
+    //service
+    ReportInfoService,
+  ],
+  bootstrap: []
 })
 export class FormAssessModule { }

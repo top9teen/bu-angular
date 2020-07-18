@@ -1,12 +1,14 @@
 import { AgmCoreModule, MouseEvent } from '@agm/core';
 import { Component, NgModule, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Http, Response } from '@angular/http';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
 import { routerTransition } from 'src/app/router.animations';
 import * as Config from '../../../shared/config/constants';
 import { ApiServiceModule } from '../../api-service/api-service.module';
 import { AssessmentGroupModel, DataCriterionDetail, DataGoogleDetail, DataGoogleMapRespModel, InspectionModel, InspectionModelModule } from '../../model/inspection-model/inspection-model';
+import { ReportInfoService } from '../feature/info/report-info.service';
+import { ReportallFeatureComponent } from '../feature/reportall-feature/reportall-feature.component';
 @Component({
   selector: 'app-report-all',
   templateUrl: './report-all.component.html',
@@ -26,20 +28,21 @@ import { AssessmentGroupModel, DataCriterionDetail, DataGoogleDetail, DataGoogle
 
 
 export class ReportAllComponent  implements  OnInit {
-  dataTable: any;
-  dtOptions: DataTables.Settings = {};
-  dtTrigger = new Subject();
+
+  @ViewChild(ReportallFeatureComponent) reportAllFeatureComponent: ReportallFeatureComponent;
 
   constructor(
     private apiService: ApiServiceModule,
     private fb: FormBuilder,
     private inspectionModelModule: InspectionModelModule,
-    public router: Router) {
+    public router: Router,
+    public reportInfoService :ReportInfoService,
+    private http: Http) {
     this.onLoadData();
   }
   dataGoogleMapRespModel: DataGoogleMapRespModel;
-  dataGoogleDetails: Array<DataGoogleDetail> = [];
-  dataCriterionDetails: Array<DataCriterionDetail> = [];
+  dataGoogleDetails: DataGoogleDetail[] = [];
+  dataCriterionDetails: DataCriterionDetail[] = [];
   pdfURL: String;
   lat = 13.340781;
   lng = 101.472918;
@@ -71,12 +74,14 @@ export class ReportAllComponent  implements  OnInit {
   dateStart?: String;
   dateEnd?: String;
   community?: String;
+  lavel?: String;
 
   inspectionForm: FormGroup = this.fb.group({
     inspectionId: this.fb.control('', Validators.required),
     dateStart: this.fb.control('', Validators.required),
     dateEnd: this.fb.control('', Validators.required),
-    community: this.fb.control('', Validators.required)
+    community: this.fb.control('', Validators.required),
+    lavel: this.fb.control('', Validators.required)
   });
   public barChartLabels: string[] = [
 
@@ -207,42 +212,34 @@ export class ReportAllComponent  implements  OnInit {
 
   onLoadDataAssess() {
   }
-  public loadData(): void {
+  async loadData() {
     this.barChartLabels = [];
-    // this.apiService.getAssessByInspecionAndDate(this.inspectionForm.value).subscribe(
-    //   () => {
-    //     this.assessModels = this.inspectionModelModule._assessmentGroupModel;
-    //     const data = [];
-    //     const label = [];
-    //     for (let i = 0; i < this.assessModels.length; i++) {
-    //       const d = this.assessModels[this.assessModels.length - (i + 1)].count;
-    //       const lab: String = this.assessModels[this.assessModels.length - (i + 1)].community;
-    //       data.push(d);
-    //       this.barChartLabels.push(String(lab));
-
-    //     }
-    //     const clone = JSON.parse(JSON.stringify(this.barChartData));
-    //     clone[0].data = data;
-    //     this.barChartData = clone;
-    //   }, (err) => {
-    //     console.log('error -> ', err);
-    //   });
-      this.dataGoogleDetails = [];
-      this.apiService.getDataMap(this.inspectionForm.value).subscribe(
-        () => {
-          // debugger;
-          this.dataGoogleMapRespModel = this.inspectionModelModule._dataGoogleMapRespModel;
-          this.dataGoogleDetails = this.dataGoogleMapRespModel.dataGoogleDetails
+    this.dataGoogleDetails = [];
+     await this.http.post(Config.API_ASSESS_URL + 'get-datamap',this.inspectionForm.value)
+        .subscribe(async persons => {
+          console.log('this.dataGoogleDetails.length -> ', this.dataGoogleDetails.length);
+          this.dataGoogleMapRespModel = this.extractData(persons);
           this.dataCriterionDetails = this.dataGoogleMapRespModel.dataCriterionDetails;
-          this.pdfURL = Config.API_ASSESS_URL + 'print-report/';
+          this.dataGoogleDetails = this.dataGoogleMapRespModel.dataGoogleDetails;
 
-          this.reloadData();
+          this.pdfURL = Config.API_ASSESS_URL + 'print-report/';
+          if (this.dataGoogleDetails.length > 0) {
+
+            this.reportInfoService.setallDataInfo(this.dataGoogleDetails);
+            this.reportAllFeatureComponent.ngOnInit();
+          }
         }, (err) => {
-          console.log('error -> ', err);
+        console.log('error -> ', err);
         });
 
 
   }
+  extractData(res: Response) {
+    const body = res.json();
+    // console.log('error -> ', res);
+    return body.data || {};
+  }
+
   // events
   public chartClicked(e: any): void {
     // console.log(e);
@@ -277,6 +274,7 @@ export class ReportAllComponent  implements  OnInit {
 
 
   ngOnInit() {
+    this.reportInfoService.setallDataInfo(null);
     this.barChartType = 'bar';
     this.barChartLegend = true;
     this.doughnutChartType = 'doughnut';
@@ -286,16 +284,6 @@ export class ReportAllComponent  implements  OnInit {
     this.polarAreaChartType = 'polarArea';
     this.lineChartLegend = true;
     this.lineChartType = 'line';
-  }
-
-  async reloadData(){
-      this.dtOptions = {
-        pagingType: 'full_numbers',
-        pageLength: 10,
-      };
-
-      this.dtTrigger.next();
-      this.dtTrigger.complete();
   }
 }
 
