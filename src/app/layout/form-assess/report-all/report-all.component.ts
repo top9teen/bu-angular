@@ -27,7 +27,7 @@ import { ReportallFeatureComponent } from '../feature/reportall-feature/reportal
 })
 
 
-export class ReportAllComponent  implements  OnInit {
+export class ReportAllComponent implements OnInit {
 
   @ViewChild(ReportallFeatureComponent) reportAllFeatureComponent: ReportallFeatureComponent;
 
@@ -36,7 +36,7 @@ export class ReportAllComponent  implements  OnInit {
     private fb: FormBuilder,
     private inspectionModelModule: InspectionModelModule,
     public router: Router,
-    public reportInfoService :ReportInfoService,
+    public reportInfoService: ReportInfoService,
     private http: Http) {
     this.onLoadData();
   }
@@ -44,8 +44,8 @@ export class ReportAllComponent  implements  OnInit {
   dataGoogleDetails: DataGoogleDetail[] = [];
   dataCriterionDetails: DataCriterionDetail[] = [];
   pdfURL: String;
-  lat = 13.340781;
-  lng = 101.472918;
+  lat = 14.634577;
+  lng = 102.787655;
   markers: marker[] = [
     {
       lat: 51.673858,
@@ -67,7 +67,7 @@ export class ReportAllComponent  implements  OnInit {
     }
   ];
 
-  zoom = 5;
+  zoom = 13;
   inspectionModels?: Array<InspectionModel> = [];
   assessModels?: Array<AssessmentGroupModel> = [];
   inspectionId?: String;
@@ -215,22 +215,22 @@ export class ReportAllComponent  implements  OnInit {
   async loadData() {
     this.barChartLabels = [];
     this.dataGoogleDetails = [];
-     await this.http.post(Config.API_ASSESS_URL + 'get-datamap',this.inspectionForm.value)
-        .subscribe(async persons => {
-          console.log('this.dataGoogleDetails.length -> ', this.dataGoogleDetails.length);
-          this.dataGoogleMapRespModel = this.extractData(persons);
-          this.dataCriterionDetails = this.dataGoogleMapRespModel.dataCriterionDetails;
-          this.dataGoogleDetails = this.dataGoogleMapRespModel.dataGoogleDetails;
+    await this.http.post(Config.API_ASSESS_URL + 'get-datamap', this.inspectionForm.value)
+      .subscribe(async persons => {
+        console.log('this.dataGoogleDetails.length -> ', this.dataGoogleDetails.length);
+        this.dataGoogleMapRespModel = this.extractData(persons);
+        this.dataCriterionDetails = this.dataGoogleMapRespModel.dataCriterionDetails;
+        this.dataGoogleDetails = this.dataGoogleMapRespModel.dataGoogleDetails;
 
-          this.pdfURL = Config.API_ASSESS_URL + 'print-report/';
-          if (this.dataGoogleDetails.length > 0) {
+        this.pdfURL = Config.API_ASSESS_URL + 'print-report/';
+        if (this.dataGoogleDetails.length > 0) {
 
-            this.reportInfoService.setallDataInfo(this.dataGoogleDetails);
-            this.reportAllFeatureComponent.ngOnInit();
-          }
-        }, (err) => {
+          this.reportInfoService.setallDataInfo(this.dataGoogleDetails);
+          this.reportAllFeatureComponent.ngOnInit();
+        }
+      }, (err) => {
         console.log('error -> ', err);
-        });
+      });
 
 
   }
