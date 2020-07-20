@@ -1,0 +1,24 @@
+<div *ngIf="assessModels.length > 0 ">
+  <table id="example" datatable  [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+    <thead>
+      <tr>
+        <th>ลำดับ</th>
+        <th>วันที่</th>
+        <th>ผลการประเมิน</th>
+        <th>ปริ้นรายงาน</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let obj of assessModels ; let i = index">
+        <td><span>{{i + 1}}</span></td>
+        <td><span>{{obj.createDate}}</span></td>
+        <td><span>{{obj.assessmentDetail}}</span></td>
+        <td>
+          <div class="button">
+            <a class="button button1" href="{{pdfURL}}{{obj.assessmentId}}" target="_blank">Report</a>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

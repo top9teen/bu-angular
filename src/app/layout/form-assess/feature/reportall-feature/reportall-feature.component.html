@@ -1,0 +1,30 @@
+<div>
+  <table datatable id="example" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
+    <thead>
+      <tr>
+        <th style="text-align: center">ลำดับ</th>
+        <th style="text-align: center">ชื่อ - สกุล</th>
+        <th style="text-align: center">โรค</th>
+        <th style="text-align: center">ผลการประเมิน</th>
+        <th style="text-align: center">ระดับ</th>
+        <th style="text-align: center">ชุมชน</th>
+        <th style="text-align: center">ปริ้นรายงาน</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let obj of dataGoogleDetails ; let i = index">
+        <td style="width:3%;text-align: center"><span>{{i + 1}}</span></td>
+        <td style="width:12%;text-align: center"><span>{{obj.name}}</span></td>
+        <td style="width:27%;text-align: center"><span>{{obj.inspectionsName}}</span></td>
+        <td style="width:40%;text-align: center"><span>{{obj.assessmentDetail}}</span></td>
+        <td style="width:3%;text-align: center"><span>{{obj.lavel}}</span></td>
+        <td style="width:10%;text-align: center"><span>{{obj.community}}</span></td>
+        <td style="width:5%;text-align: center">
+          <div class="button">
+            <a class="button button1" href="{{pdfURL}}{{obj.assessmentId}}" target="_blank">Report</a>
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
