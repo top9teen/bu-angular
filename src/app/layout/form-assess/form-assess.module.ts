@@ -21,6 +21,7 @@ import { ReportInfoService } from './feature/info/report-info.service';
 import { DataTablesModule } from 'angular-datatables';
 import { ReportFeatureComponent } from './feature/report-feature/report-feature.component';
 import { ReportallFeatureComponent } from './feature/reportall-feature/reportall-feature.component';
+import { ReportConclusionComponent } from './feature/report-conclusion/report-conclusion.component';
 @NgModule({
   imports: [CommonModule,
     FormAssessRoutingModule,
@@ -44,6 +45,7 @@ import { ReportallFeatureComponent } from './feature/reportall-feature/reportall
     ReportAllComponent,
     ReportFeatureComponent,
     ReportallFeatureComponent,
+    ReportConclusionComponent,
   ],
   providers: [
     //service
