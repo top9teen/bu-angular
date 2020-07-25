@@ -18,7 +18,7 @@ export class ReportallFeatureComponent implements OnInit {
   pdfURL = Config.API_ASSESS_URL + 'print-report/';
   dataGoogleDetails: DataGoogleDetail[] = [];
   constructor(
-    public reportInfoService :ReportInfoService
+    public reportInfoService: ReportInfoService
   ) { }
 
   async ngOnInit() {
@@ -36,7 +36,7 @@ export class ReportallFeatureComponent implements OnInit {
   }
 
 
-async  onLoadData(){
+async  onLoadData() {
   this.dataGoogleDetails = [];
   this.dataGoogleDetails = this.reportInfoService.getallDataInfo();
   setTimeout(() => {

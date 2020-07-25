@@ -7,7 +7,7 @@
     <link href="https://fonts.googleapis.com/css?family=Prompt&display=swap" rel="stylesheet">
     <div class="row">
       <!-- <div class="col-lg-1"></div> -->
-      <div class="form-group row col-lg-3">
+      <div class="form-group row col-lg-5">
         <label for="colFormLabel" class="col-sm-2 col-form-label">โรค</label>
         <div class="col-sm-10">
           <select class="form-control" formControlName="inspectionId"
@@ -20,7 +20,7 @@
         </div>
       </div>
 
-      <div class="form-group row col-lg-3">
+      <div class="form-group row col-lg-5">
         <label for="colFormLabel" class="col-sm-2 col-form-label">ชุมชน</label>
         <div class="col-sm-10">
           <select class="form-control" formControlName="community" [ngModel]="community != null ? community : '' ">
@@ -49,11 +49,11 @@
         </div>
       </div>
 
-      <div class="form-group row col-lg-3">
-        <label for="colFormLabel" class="col-sm-2 col-form-label">ระดับ</label>
-        <div class="col-sm-10">
+      <div class="form-group row col-lg-2">
+        <label for="colFormLabel" class="col-sm-3 col-form-label">ระดับ</label>
+        <div class="col-sm-9">
           <select class="form-control" formControlName="lavel" [ngModel]="lavel != null ? lavel : '' ">
-            <option value="">-- ทั้งหมด --</option>
+            <option value="">-ทั้งหมด-</option>
             <option value="1">1</option>
             <option value="2">2</option>
             <option value="3">3</option>
@@ -79,7 +79,7 @@
         </div>
       </div>
 
-      <div class="form-group row col-lg-3">
+      <div class="form-group row col-lg-2">
         <div class="col-sm-10">
           <button class="button button1" (click)="loadData()">ค้นหา</button>
         </div>
@@ -89,11 +89,23 @@
   <br>
 </div>
 <agm-map [latitude]="lat" [zoom]="zoom" [longitude]="lng">
-  <agm-marker *ngFor="let m of dataGoogleDetails; let i = index" [latitude]="m.lat" [longitude]="m.lng" [label]="m.name"
-    [iconUrl]="m.marker" (dragEnd)="markerDragEnd(m, $event)">
-
+  <!-- <agm-marker *ngFor="let m of dataGoogleDetails; let i = index" [latitude]="m.lat" [longitude]="m.lng" [label]="m.name" -->
+  <agm-marker *ngFor="let m of dataGoogleDetails; let i = index" [latitude]="m.lat" [longitude]="m.lng"
+    [iconUrl]="m.marker" (dragEnd)="markerDragEnd(m, $event)"
+    >
     <agm-info-window>
-      <strong>InfoWindow content</strong>
+      <h5 style="text-align: center;"><strong>รายละเอียดผู้สูงอายุ</strong></h5><br>
+      <hr style=" padding: 1px;margin: 0px;">
+      <label><strong>ชุมชน :</strong>{{m.community}}</label><br>
+       <label><strong>โรค :</strong>{{m.inspectionsName}}</label><br>
+       <label><strong>ชื่อ :</strong>{{m.name}}</label>
+       <label><strong>ระดับ :</strong><img src="{{m.marker}}" style="width: 20px;height:20px;"></label>
+       <hr style=" padding: 1px;margin: 0px;">
+       <!-- <label><strong>ชุมชน :</strong>{{m.community}}</label><br>
+        <label><strong>โรค :</strong>{{m.inspectionsName}}</label><br>
+        <label><strong>ชื่อ :</strong>{{m.name}}</label>
+        <label><strong>ระดับ :</strong><img src="{{m.marker}}" style="width: 20px;height:20px;"></label>
+        <hr style=" padding: 1px;margin: 0px;"> -->
     </agm-info-window>
 
   </agm-marker>

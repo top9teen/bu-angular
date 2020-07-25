@@ -1,28 +1,24 @@
-<div>
-  <table>
-    <tr>
-      <th>ลำดับ</th>
-      <th>ชื่อชุมชน</th>
-      <th>โรค</th>
-      <th>จำนวน/คน</th>
-    </tr>
-    <tr>
-      <td>1</td>
-      <td>วัดขุนทอง</td>
-      <td>โรคซึมเศร้า</td>
-      <td>10</td>
-    </tr>
-    <tr>
-      <td></td>
-      <td></td>
-      <td>โรคซึมเศร้า</td>
-      <td></td>
-    </tr>
-    <tr>
-      <td>2</td>
-      <td>บ้านป่า</td>
-      <td>โรคข้อเข่าเสื่อม</td>
-      <td>2</td>
-    </tr>
-  </table>
+<div *ngIf="dataShow.length > 0 ">
+  <div *ngFor="let item of dataShow">
+    <br>
+    <h3>ชุมชน : {{item.community}}</h3>
+    <table  class="table table-bordered">
+      <tr>
+        <th  style="text-align: center">ลำดับ</th>
+        <th  style="text-align: center">โรค</th>
+        <th  style="text-align: center">จำนวน/คน</th>
+      </tr>
+      <tr *ngFor="let item2 of item.inspectionId; let k = index">
+        <td style="width:10%;text-align: center">{{k + 1}}</td>
+        <td style="width:75%">{{item2.name}}</td>
+        <td style="width:15%;text-align: center">{{item2.member}}</td>
+      </tr>
+      <tr>
+        <td></td>
+        <td style="text-align: center">รวม</td>
+        <td style="width:15%;text-align: center"><span style="color: red;">{{item.member}}</span></td>
+      </tr>
+    </table>
+    <hr style=" padding: 1px;margin: 0px;">
+  </div>
 </div>

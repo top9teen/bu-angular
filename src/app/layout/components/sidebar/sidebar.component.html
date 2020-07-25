@@ -24,8 +24,12 @@
 				    	[routerLinkActive]="['router-link-active']" class="list-group-item">
 				    	<i class="fa fa-home"></i>&nbsp; <span>{{menuMain.menuNameTh}}</span>
 				    </a>
-			    </div>
+          </div>
+
         </div>
+        <a  class="list-group-item " style="cursor:pointer" (click)="authService.logout()">
+          <i class="fa fa-power-off"></i> &nbsp; <span>ออกจากระบบ</span>
+      </a>
 		<!-- <a routerLink="/home" [routerLinkActive]="['router-link-active']"
 			class="list-group-item"> <i class="fa fa-home"></i>&nbsp; <span>{{
 				'หน้าแรก' | translate }}</span>

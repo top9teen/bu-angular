@@ -172,6 +172,7 @@ export class DataGoogleDetail {
   community: String;
   lavel: String;
   inspectionsName: string;
+  strdate: Date;
 }
 
 export class DataCriterionDetail {

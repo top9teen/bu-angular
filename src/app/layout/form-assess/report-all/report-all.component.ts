@@ -1,3 +1,4 @@
+import { ReportConclusionComponent } from './../feature/report-conclusion/report-conclusion.component';
 import { AgmCoreModule, MouseEvent } from '@agm/core';
 import { Component, NgModule, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -6,6 +7,7 @@ import { Router } from '@angular/router';
 import { routerTransition } from 'src/app/router.animations';
 import * as Config from '../../../shared/config/constants';
 import { ApiServiceModule } from '../../api-service/api-service.module';
+// tslint:disable-next-line: max-line-length
 import { AssessmentGroupModel, DataCriterionDetail, DataGoogleDetail, DataGoogleMapRespModel, InspectionModel, InspectionModelModule } from '../../model/inspection-model/inspection-model';
 import { ReportInfoService } from '../feature/info/report-info.service';
 import { ReportallFeatureComponent } from '../feature/reportall-feature/reportall-feature.component';
@@ -30,13 +32,14 @@ import { ReportallFeatureComponent } from '../feature/reportall-feature/reportal
 export class ReportAllComponent implements OnInit {
 
   @ViewChild(ReportallFeatureComponent) reportAllFeatureComponent: ReportallFeatureComponent;
-
+  @ViewChild(ReportConclusionComponent) reportConclusionComponent: ReportConclusionComponent;
   constructor(
     private apiService: ApiServiceModule,
     private fb: FormBuilder,
     private inspectionModelModule: InspectionModelModule,
     public router: Router,
     public reportInfoService: ReportInfoService,
+    // tslint:disable-next-line: deprecation
     private http: Http) {
     this.onLoadData();
   }
@@ -215,9 +218,10 @@ export class ReportAllComponent implements OnInit {
   async loadData() {
     this.barChartLabels = [];
     this.dataGoogleDetails = [];
+    this.dataCriterionDetails = [];
     await this.http.post(Config.API_ASSESS_URL + 'get-datamap', this.inspectionForm.value)
       .subscribe(async persons => {
-        console.log('this.dataGoogleDetails.length -> ', this.dataGoogleDetails.length);
+        // console.log('this.dataGoogleDetails.length -> ', this.dataGoogleDetails.length);
         this.dataGoogleMapRespModel = this.extractData(persons);
         this.dataCriterionDetails = this.dataGoogleMapRespModel.dataCriterionDetails;
         this.dataGoogleDetails = this.dataGoogleMapRespModel.dataGoogleDetails;
@@ -227,13 +231,13 @@ export class ReportAllComponent implements OnInit {
 
           this.reportInfoService.setallDataInfo(this.dataGoogleDetails);
           this.reportAllFeatureComponent.ngOnInit();
+          this.reportConclusionComponent.onLoadData();
         }
       }, (err) => {
         console.log('error -> ', err);
       });
-
-
   }
+  // tslint:disable-next-line: deprecation
   extractData(res: Response) {
     const body = res.json();
     // console.log('error -> ', res);

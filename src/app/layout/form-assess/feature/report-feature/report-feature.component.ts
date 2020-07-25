@@ -19,7 +19,7 @@ export class ReportFeatureComponent implements OnInit {
   assessModels: AssessModel[] = [];
   pdfURL = Config.API_ASSESS_URL + 'print-report/';
   constructor(
-    public reportInfoService :ReportInfoService
+    public reportInfoService: ReportInfoService
     ) { }
 
  async ngOnInit() {
@@ -38,7 +38,7 @@ export class ReportFeatureComponent implements OnInit {
   }
 
 
-async  onLoadData(){
+async  onLoadData() {
   this.assessModels = [];
   this.assessModels = this.reportInfoService.getDataInfo();
   setTimeout(() => {
