@@ -10,7 +10,7 @@ import * as Config from '../../../../shared/config/constants';
 })
 export class ReportallFeatureComponent implements OnInit {
 
-
+  flagShow: boolean;
   @ViewChild('dataTable') table;
   dataTable: any;
   dtOptions: DataTables.Settings = {};
@@ -22,10 +22,10 @@ export class ReportallFeatureComponent implements OnInit {
   ) { }
 
   async ngOnInit() {
+    this.flagShow = true;
     await this.Options();
     this.dataGoogleDetails = [];
     await this.onLoadData();
-
   }
 
   async Options() {
@@ -41,7 +41,11 @@ async  onLoadData() {
   this.dataGoogleDetails = this.reportInfoService.getallDataInfo();
   setTimeout(() => {
     this.dtTrigger.next();
-  }, 200);
-  $('#example').DataTable().destroy();
+  }, 500);
+ await $('#example').DataTable().destroy();
+  }
+
+  async disflag() {
+    this.flagShow = false;
   }
 }

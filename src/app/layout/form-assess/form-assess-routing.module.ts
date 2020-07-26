@@ -19,7 +19,10 @@ const routes: Routes = [
   {path : 'assess-ment' , component : AssessMentComponent},
   {path : 'add-evaluation' , component : AddEvaluationComponent},
   {path : 'report' , component : ReportComponent},
-  {path : 'report-all' , component : ReportAllComponent}
+
+  {path : 'report-all/page1' , component : ReportAllComponent},
+  {path : 'report-all/page2' , component : ReportAllComponent},
+  {path : 'report-all/page3' , component : ReportAllComponent}
 
 ];
 

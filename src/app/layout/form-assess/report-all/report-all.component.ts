@@ -1,4 +1,4 @@
-import { ReportConclusionComponent } from './../feature/report-conclusion/report-conclusion.component';
+import { ReportConclusionComponent } from '../feature/report-conclusion/report-conclusion.component';
 import { AgmCoreModule, MouseEvent } from '@agm/core';
 import { Component, NgModule, OnInit, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
@@ -43,6 +43,13 @@ export class ReportAllComponent implements OnInit {
     private http: Http) {
     this.onLoadData();
   }
+
+  // check page report all
+  checkpage1: boolean;
+  checkpage2: boolean;
+  checkpage3: boolean;
+  checkpage2_1: boolean;
+
   dataGoogleMapRespModel: DataGoogleMapRespModel;
   dataGoogleDetails: DataGoogleDetail[] = [];
   dataCriterionDetails: DataCriterionDetail[] = [];
@@ -213,12 +220,12 @@ export class ReportAllComponent implements OnInit {
       });
   }
 
-  onLoadDataAssess() {
-  }
   async loadData() {
     this.barChartLabels = [];
     this.dataGoogleDetails = [];
     this.dataCriterionDetails = [];
+    this.checkURL();
+    this.reportInfoService.setallDataInfo(null);
     await this.http.post(Config.API_ASSESS_URL + 'get-datamap', this.inspectionForm.value)
       .subscribe(async persons => {
         // console.log('this.dataGoogleDetails.length -> ', this.dataGoogleDetails.length);
@@ -228,10 +235,18 @@ export class ReportAllComponent implements OnInit {
 
         this.pdfURL = Config.API_ASSESS_URL + 'print-report/';
         if (this.dataGoogleDetails.length > 0) {
-
           this.reportInfoService.setallDataInfo(this.dataGoogleDetails);
-          this.reportAllFeatureComponent.ngOnInit();
-          this.reportConclusionComponent.onLoadData();
+          if (this.checkpage2) {
+            await this.reportAllFeatureComponent.ngOnInit();
+          } else if (this.checkpage3) {
+            await this.reportConclusionComponent.onLoadData();
+          }
+        } else {
+          if (this.checkpage2) {
+            await this.reportAllFeatureComponent.ngOnInit();
+          } else if (this.checkpage3) {
+            await this.reportConclusionComponent.onLoadData();
+          }
         }
       }, (err) => {
         console.log('error -> ', err);
@@ -278,6 +293,8 @@ export class ReportAllComponent implements OnInit {
 
 
   ngOnInit() {
+    this.checkURL();
+    console.log(this.router.url);
     this.reportInfoService.setallDataInfo(null);
     this.barChartType = 'bar';
     this.barChartLegend = true;
@@ -288,6 +305,34 @@ export class ReportAllComponent implements OnInit {
     this.polarAreaChartType = 'polarArea';
     this.lineChartLegend = true;
     this.lineChartType = 'line';
+  }
+
+  checkURL() {
+    this.checkpage1 = false;
+    this.checkpage2 = false;
+    this.checkpage3 = false;
+  switch (this.router.url) {
+    case '/form-assess/report-all/page1':
+      this.checkpage1 = true;
+      this.checkpage2 = false;
+      this.checkpage3 = false;
+    break;
+    case '/form-assess/report-all/page2':
+      this.checkpage2 = true;
+      this.checkpage1 = false;
+      this.checkpage3 = false;
+    break;
+    case '/form-assess/report-all/page3':
+      this.checkpage3 = true;
+      this.checkpage1 = false;
+      this.checkpage2 = false;
+    break;
+    default:
+      this.checkpage1 = false;
+      this.checkpage2 = false;
+      this.checkpage3 = false;
+      break;
+  }
   }
 }
 

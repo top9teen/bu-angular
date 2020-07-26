@@ -86,8 +86,8 @@
       </div>
     </div>
   </form>
+  <div *ngIf="checkpage1" >
   <br>
-</div>
 <agm-map [latitude]="lat" [zoom]="zoom" [longitude]="lng">
   <!-- <agm-marker *ngFor="let m of dataGoogleDetails; let i = index" [latitude]="m.lat" [longitude]="m.lng" [label]="m.name" -->
   <agm-marker *ngFor="let m of dataGoogleDetails; let i = index" [latitude]="m.lat" [longitude]="m.lng"
@@ -111,18 +111,22 @@
   </agm-marker>
 </agm-map>
 <br>
-<div *ngFor="let obj of dataCriterionDetails;">
+<div *ngFor="let obj of dataCriterionDetails;" >
   <img src="{{obj.marker}}">
   <label>{{obj.criterDetail}}</label>
 </div>
 <br>
 <hr>
 <br>
-<app-reportall-feature></app-reportall-feature>
-<br>
-<hr>
-<div class="font">
+</div>
+  <div *ngIf="checkpage2">
+    <br>
+    <app-reportall-feature></app-reportall-feature>
+    <br >
+    <hr>
+  </div>
+<div class="font" *ngIf="checkpage3" >
   <h3>สรุปผลการตรวจสุขภาพเบื้องต้นด้วยตนเองสำหรับผู้สูงอายุ</h3>
 </div>
-<br>
-<app-report-conclusion></app-report-conclusion>
+<br *ngIf="checkpage3" >
+<app-report-conclusion *ngIf="checkpage3" ></app-report-conclusion>
