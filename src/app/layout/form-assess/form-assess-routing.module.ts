@@ -9,6 +9,7 @@ import {AddEvaluationComponent} from './add-evaluation/add-evaluation.component'
 import { AssessMentComponent } from './assess-ment/assess-ment.component';
 import {ReportComponent} from './report/report.component';
 import {ReportAllComponent} from './report-all/report-all.component';
+import { ReportAllUserComponent } from './report-all-user/report-all-user.component';
 
 const routes: Routes = [
   {path : 'add-inspection' , component : AddInspectionComponent},
@@ -22,8 +23,8 @@ const routes: Routes = [
 
   {path : 'report-all/page1' , component : ReportAllComponent},
   {path : 'report-all/page2' , component : ReportAllComponent},
-  {path : 'report-all/page3' , component : ReportAllComponent}
-
+  {path : 'report-all/page3' , component : ReportAllComponent},
+  {path : 'report-allUser' , component : ReportAllUserComponent}
 ];
 
 @NgModule({

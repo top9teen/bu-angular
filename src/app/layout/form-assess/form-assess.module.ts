@@ -1,3 +1,4 @@
+import { ReportAllUserComponent } from './report-all-user/report-all-user.component';
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
@@ -46,6 +47,7 @@ import { ReportConclusionComponent } from './feature/report-conclusion/report-co
     ReportFeatureComponent,
     ReportallFeatureComponent,
     ReportConclusionComponent,
+    ReportAllUserComponent
   ],
   providers: [
     //service
