@@ -294,7 +294,6 @@ export class ReportAllComponent implements OnInit {
 
   ngOnInit() {
     this.checkURL();
-    console.log(this.router.url);
     this.reportInfoService.setallDataInfo(null);
     this.barChartType = 'bar';
     this.barChartLegend = true;
