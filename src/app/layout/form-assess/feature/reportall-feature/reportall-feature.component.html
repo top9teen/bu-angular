@@ -1,4 +1,16 @@
 <div *ngIf="flagShow">
+
+  <div class="row col-md-12">
+    <div class="pull-right">
+      <button [disabled]="dataGoogleDetails.length == 0"  type="button"
+        class="button button1" (click)="goToExportPDFFinishedTask()">
+        <span class="glyphicon glyphicon-save-file"></span> Export PDF</button>
+      <button [disabled]="dataGoogleDetails.length == 0" type="button" class="button button1"
+        (click)="goToExportExcelFinishedTask()">
+        <span class="glyphicon glyphicon-save-file"></span> Export Excel</button>
+    </div>
+  </div>
+
   <table datatable id="example" [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="row-border hover">
     <thead>
       <tr>
@@ -30,4 +42,4 @@
     </tbody>
   </table>
 </div>
-
+<app-loading-screen *ngIf="isSaving"></app-loading-screen>

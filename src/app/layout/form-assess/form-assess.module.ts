@@ -23,6 +23,7 @@ import { DataTablesModule } from 'angular-datatables';
 import { ReportFeatureComponent } from './feature/report-feature/report-feature.component';
 import { ReportallFeatureComponent } from './feature/reportall-feature/reportall-feature.component';
 import { ReportConclusionComponent } from './feature/report-conclusion/report-conclusion.component';
+import { LoadingScreenComponent } from './feature/loading-screen/loading-screen.component';
 @NgModule({
   imports: [CommonModule,
     FormAssessRoutingModule,
@@ -47,7 +48,8 @@ import { ReportConclusionComponent } from './feature/report-conclusion/report-co
     ReportFeatureComponent,
     ReportallFeatureComponent,
     ReportConclusionComponent,
-    ReportAllUserComponent
+    ReportAllUserComponent,
+    LoadingScreenComponent
   ],
   providers: [
     //service
