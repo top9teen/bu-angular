@@ -30,7 +30,7 @@ export class ReportAllUserComponent implements OnInit {
       this.onLoadData();
   }
 
-
+  name = "ประวัติผลการประเมินรายบุคลลย้อนหลัง";
   dataGoogleMapRespModel: DataGoogleMapRespModel;
   dataGoogleDetails: DataGoogleDetail[] = [];
   inspectionModels?: Array<InspectionModel> = [];

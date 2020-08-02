@@ -50,6 +50,7 @@ export class ReportAllComponent implements OnInit {
   checkpage3: boolean;
   checkpage2_1: boolean;
 
+  name = "ประวัติผลการประเมิน";
   dataGoogleMapRespModel: DataGoogleMapRespModel;
   dataGoogleDetails: DataGoogleDetail[] = [];
   dataCriterionDetails: DataCriterionDetail[] = [];

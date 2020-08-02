@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input } from '@angular/core';
 import { ReportInfoService } from '../info/report-info.service';
 import { Subject } from 'rxjs';
 import { DataGoogleDetail } from 'src/app/layout/model/inspection-model/inspection-model';
@@ -12,6 +12,8 @@ import { UserService, UserModel } from 'src/app/shared/guard/user.service';
 })
 export class ReportallFeatureComponent implements OnInit {
 
+  @Input() name: string;
+
   flagShow: boolean;
   isSaving: boolean;
 
@@ -21,6 +23,7 @@ export class ReportallFeatureComponent implements OnInit {
   dtTrigger = new Subject();
   pdfURL = Config.API_ASSESS_URL + 'print-report/';
   dataGoogleDetails: DataGoogleDetail[] = [];
+
   public userModeil: UserModel;
   constructor(
     public reportInfoService: ReportInfoService,
@@ -63,10 +66,10 @@ async  onLoadData() {
     this.isSaving = true;
     await this.http.post(Config.API_ASSESS_URL + 'completeReport/GenexportData/' + this.userModeil.userId,  this.dataGoogleDetails).toPromise().then(async (data: string) => {
       if (data === 'S') {
-        window.open(Config.API_ASSESS_URL + 'completeReport/exportExcel/' + this.userModeil.userId);
+        window.open(Config.API_ASSESS_URL + 'completeReport/exportExcel/' + this.userModeil.userId + '/' + this.name);
       }
     }, err => {
-      window.open(Config.API_ASSESS_URL + 'completeReport/exportExcel/' + this.userModeil.userId);
+      window.open(Config.API_ASSESS_URL + 'completeReport/exportExcel/' + this.userModeil.userId + '/' + this.name);
     });
     this.isSaving = false;
   }
@@ -75,10 +78,10 @@ async  onLoadData() {
     this.isSaving = true;
     await this.http.post(Config.API_ASSESS_URL + 'completeReport/GenexportData/' + this.userModeil.userId,  this.dataGoogleDetails).toPromise().then(async (data: string) => {
       if (data === 'S') {
-        window.open(Config.API_ASSESS_URL + 'completeReport/exportPDF/' + this.userModeil.userId);
+        window.open(Config.API_ASSESS_URL + 'completeReport/exportPDF/' + this.userModeil.userId + '/' + this.name);
       }
     }, err => {
-      window.open(Config.API_ASSESS_URL + 'completeReport/exportPDF/' + this.userModeil.userId);
+      window.open(Config.API_ASSESS_URL + 'completeReport/exportPDF/' + this.userModeil.userId + '/' + this.name);
     });
     this.isSaving = false;
   }
