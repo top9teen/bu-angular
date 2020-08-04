@@ -51,13 +51,23 @@ export class ReportallFeatureComponent implements OnInit {
 
 async  onLoadData() {
   this.dataGoogleDetails = [];
-  this.dataGoogleDetails = this.reportInfoService.getallDataInfo();
+  this.dataGoogleDetails = this.sortdata(this.reportInfoService.getallDataInfo());
   setTimeout(() => {
     this.dtTrigger.next();
   }, 500);
- await $('#example').DataTable().destroy();
+      await $('#example').DataTable().destroy();
   }
 
+  sortdata(data) {
+    if (data.length > 1) {
+      data.sort(
+        function (a, b) {
+          return Number(a.strdate < b.strdate);
+        }
+      );
+    }
+    return data;
+  }
   async disflag() {
     this.flagShow = false;
   }
