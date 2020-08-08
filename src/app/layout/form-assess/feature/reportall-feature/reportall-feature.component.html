@@ -27,12 +27,12 @@
     <tbody>
       <tr *ngFor="let obj of dataGoogleDetails ; let i = index">
         <td style="width:5%;text-align: center"><span>{{i + 1}}</span></td>
-        <td style="width:12%;text-align: center"><span>{{obj.name}}</span></td>
-        <td style="width:23%;text-align: center"><span>{{obj.inspectionsName}}</span></td>
-        <td style="width:34%;text-align: center"><span>{{obj.assessmentDetail}}</span></td>
-        <!-- <td style="width:3%;text-align: center"><span>{{obj.lavel}}</span></td> -->
-        <td style="width:10%;text-align: center"><span>{{obj.community}}</span></td>
-        <td style="width:10%;text-align: center"><span>{{obj.strdate | date:'yyyy/MM/dd'}}</span></td>
+        <td style="width:12%;text-align: center"><span>{{obj.name ? obj.name: "-"}}</span></td>
+        <td style="width:23%;text-align: center"><span>{{obj.inspectionsName ? obj.inspectionsName: "-"}}</span></td>
+        <td style="width:34%;text-align: center"><span>{{obj.assessmentDetail ? obj.assessmentDetail: "-"}}</span></td>
+        <!-- <td style="width:3%;text-align: center"><span>{{obj.lavel ? obj.lavel: "-"}}</span></td> -->
+        <td style="width:10%;text-align: center"><span>{{obj.community ? obj.community: "-"}}</span></td>
+        <td style="width:10%;text-align: center;"><span style="display: none;">{{obj.strdate | date:'yyyy/MM/dd'}}</span>{{obj.strdate | date:'dd/MM/yyyy'}}</td>
         <!-- yyyy/MM/dd -->
         <!-- dd/MM/yyy HH:mm:ss -->
         <td style="width:6%;text-align: center">
@@ -45,3 +45,4 @@
   </table>
 </div>
 <app-loading-screen *ngIf="isSaving"></app-loading-screen>
+

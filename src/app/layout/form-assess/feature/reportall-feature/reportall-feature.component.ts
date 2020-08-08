@@ -45,6 +45,10 @@ export class ReportallFeatureComponent implements OnInit {
     this.dtOptions = {
       pagingType: 'full_numbers',
       pageLength: 10,
+      columnDefs: [
+        { targets: 3, type: 'date' }
+
+      ]
     };
   }
 
