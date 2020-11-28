@@ -52,13 +52,16 @@ export class AssessDiseaseComponent implements OnInit {
       });
   }
 
-  getQuestion(Q: number) {
+  async getQuestion(Q: number) {
     if (this.inspectionId !== '' && this.inspectionId != null) {
-      this.apiService.getInspectionById(this.inspectionId.valueOf(), Q).subscribe(
+      await this.apiService.getInspectionById(this.inspectionId.valueOf(), Q).subscribe(
         () => {
           this.inspectionModel = this.inspectionModelModule._inspectionModel;
           this.questions = this.inspectionModel.questions;
           this.inspectionName = this.inspectionModel.inspectionName;
+          if(Q==8){
+            this.addFromSubmit();
+          }
         }, (err) => {
           console.log('error -> ', err);
         });
@@ -117,7 +120,7 @@ export class AssessDiseaseComponent implements OnInit {
 
   }
 
-  onSubmitForm2Q() {
+ onSubmitForm2Q() {
     let answer = {} as submitQ;
     const sizeChoice = parseFloat((document.getElementById('sizeChoice') as HTMLInputElement).value);
       for (let i = 0; i < sizeChoice; i++) {
@@ -144,7 +147,6 @@ export class AssessDiseaseComponent implements OnInit {
             this.Q8 =  false;
             this.Q9 = true;
             this.checkQ = 0;
-            this.getQuestion(this.checkQ);
         }else{
           this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
           this.router.navigate(['/form-assess/assess-ment']));
@@ -184,6 +186,7 @@ export class AssessDiseaseComponent implements OnInit {
             this.Q9 = false;
             this.checkQ = 8;
             this.getQuestion(this.checkQ);
+            this.addFromSubmit();
         }else{
           this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
           this.router.navigate(['/form-assess/assess-ment']));
@@ -196,42 +199,15 @@ export class AssessDiseaseComponent implements OnInit {
   }
 
   onSubmitForm8Q() {
-    let answer = {} as submitQ;
-    // const sizeChoice = parseFloat((document.getElementById('sizeChoice') as HTMLInputElement).value);
-    console.log('result :: ' + JSON.stringify(this.choiceForm))
-      // for (let i = 0; i < sizeChoice; i++) {
-      //   const red = document.getElementsByName('criterion_' + i);
-      //   const lengths = red.length;
-      //   for (let t = 0; t < lengths; t++) {
-      //     const s = (red[t] as HTMLInputElement);
-      //     if (s.checked) {
-      //       answer.answer = t;
-      //       answer.userId = localStorage.getItem('userId');
-      //       this.result.push(answer);
-      //       answer = {} as submitQ;
-      //     }
-      //   }
-      // }
-      for(let j = 0; j < this.questions.length; j++){
-        this.result[j].question_id =+ this.questions[j].questionId;
-      }
-      console.log('result :: ' + JSON.stringify(this.result))
-    // this.apiService.getsaveAssess2Q(jsondata).subscribe(
-    //   (res) => {
-    //     if(res){
-    //         this.Q2 =  false;
-    //         this.Q8 =  false;
-    //         this.Q9 = true;
-    //         this.checkQ = 0;
-    //         this.getQuestion(this.checkQ);
-    //     }else{
-    //       this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
-    //       this.router.navigate(['/form-assess/assess-ment']));
-    //     }
-    //   }, (err) => {
-    //     this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
-    //     this.router.navigate(['/home']));
-    //   });
+    console.log('result :: ' + JSON.stringify(this.result))
+    this.apiService.getsaveAssess2Q(this.result).subscribe(
+      () => {
+          this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
+          this.router.navigate(['/form-assess/assess-ment']));
+      }, (err) => {
+        this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
+        this.router.navigate(['/home']));
+      });
     this.result = [];
   }
 
@@ -244,10 +220,51 @@ export class AssessDiseaseComponent implements OnInit {
   //     var d = document.getElementsByName("criterion_0");
   //  }
 
-  onChange(index: number){
-    if(index == 3){
-      this.disabled = true;
+  addFromSubmit(){
+    this.result = [];
+    if(this.questions.length > 0){
+      let answer = {} as submitQ;
+      for(let j = 0; j < this.questions.length; j++){
+          answer.question_id =+ this.questions[j].questionId;
+          answer.userId = localStorage.getItem('userId');
+          this.result.push(answer);
+          answer = {} as submitQ;
+      }
     }
+  }
+  onChange(index: number, data: string, questId: number){
+    console.log("index input :: " + index);
+    console.log("questId  :: " + questId);
+    console.log("data input :: " + data);
+    let texterror = /^[0-9]+$/;
+    console.log("data if :: " + texterror.test(data));
+    if (!texterror.test(data)) {
+      console.log("data if ===============" )
+      if(index == 3){
+        this.disabled = false;
+      }
+      if(this.result.length > 0){
+        for(let j = 0; j < this.result.length; j++){
+          if(this.result[j].question_id == questId){
+              this.result[j].answer = 0;
+            break;
+          }
+        }
+      }
+    }else{
+        if(index == 3){
+          this.disabled = true;
+        }
+      if(this.result.length > 0){
+        for(let j = 0; j < this.result.length; j++){
+          if(this.result[j].question_id == questId){
+              this.result[j].answer =+ data;
+            break;
+          }
+        }
+      }
+    }
+    console.log('result :: ' + JSON.stringify(this.result))
   }
 
   onBack() {

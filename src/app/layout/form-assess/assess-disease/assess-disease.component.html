@@ -79,9 +79,9 @@
           <div class="col-lg-2"></div>
           <div class="col-lg-10">
             <label style="margin-right: 30px; padding: 5px;">จำนวนครั้ง : </label>
-            <input *ngIf="i+1 != 4 "class="form-check-input" type="int" name="criterion_{{i}}"  maxlength="5" (blur)="onChange(i+1)"/>
-            <input *ngIf="i+1 == 4 && !disabled" class="form-check-input" type="int" name="criterion_{{i}}"  maxlength="5" disabled/>
-            <input *ngIf="i+1 == 4 && disabled" class="form-check-input" type="int" name="criterion_{{i}}"  maxlength="5"/>
+            <input #data8Q *ngIf="i+1 != 4 " type="text" name="criterion_{{i}}"  maxlength="5" (blur)="onChange(i+1, data8Q.value, question.questionId)"/>
+            <input #quest4 *ngIf="i+1 == 4 && !disabled"  type="text" name="criterion_{{i}}"  maxlength="5" disabled/>
+            <input #quest4 *ngIf="i+1 == 4 && disabled"  type="text" name="criterion_{{i}}"  maxlength="5" (blur)="onChange(i+1,quest4.value,question.questionId)"/>
 
           </div>
         </div>
@@ -97,10 +97,10 @@
     &nbsp;
     <button class="btn rounded-btn" (click)="onBack()">ยกเลิก</button> -->
 
-    <button *ngIf="!Q2 && !Q8 && !Q9" class="button button1" (click)="onSubmitForm()">ยืนยัน</button>
-    <button *ngIf="Q2" class="button button1" (click)="onSubmitForm2Q()">ยืนยัน</button>
-    <button *ngIf="Q8" class="button button1" (click)="onSubmitForm8Q()">ยืนยัน</button>
-    <button *ngIf="Q9" class="button button1" (click)="onSubmitForm9Q()">ยืนยัน</button>
+    <button *ngIf="!Q2 && !Q8 && !Q9" class="button button1" (click)="onSubmitForm()" [disabled]="!choiceForm.valid">ยืนยัน</button>
+    <button *ngIf="Q2" class="button button1" (click)="onSubmitForm2Q()" >ยืนยัน</button>
+    <button *ngIf="Q8" class="button button1" (click)="onSubmitForm8Q()" [disabled]="!choiceForm.valid">ยืนยัน</button>
+    <button *ngIf="Q9" class="button button1" (click)="onSubmitForm9Q()" [disabled]="!choiceForm.valid">ยืนยัน</button>
     <button class="button button2" (click)="onBack()">ยกเลิก</button>
 
 
