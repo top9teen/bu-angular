@@ -148,9 +148,9 @@ export class ApiServiceModule {
       );
   }
 
-  getInspectionById(inspectionId: String): Observable<any> {
+  getInspectionById(inspectionId: String, Q: number): Observable<any> {
     if (inspectionId !== '') {
-      const _url = `${Config.API_ASSESS_URL}get-inspection-by-id/` + inspectionId;
+      const _url = `${Config.API_ASSESS_URL}get-inspection-by-id/` + inspectionId + '/' + Q;
       const _httpOptions = {
         headers: new HttpHeaders({
           'Content-Type': 'application/json'
@@ -173,6 +173,7 @@ export class ApiServiceModule {
     }
 
   }
+
 
   saveInspection(data: Data) {
     const _url = `${Config.API_ASSESS_URL}save-inspection/`;
@@ -337,6 +338,77 @@ export class ApiServiceModule {
           })
         );
   }
+
+  getsaveAssess2Q(datas: Array<submitQ>): Observable<any> {
+    const _url = `${Config.API_ASSESS_URL}save-assessment2Q/`;
+    const _body = datas;
+    const _httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.post<any>(_url, _body, _httpOptions)
+      .pipe(
+        map(response => {
+          if (response) {
+            return response;
+          } else {
+            throw throwError(Config.ERROR_001);
+          }
+        }),
+        catchError(error => {
+          return throwError(error);
+        })
+      );
+  }
+
+  getsaveAssess9Q(datas: Array<submitQ>): Observable<any> {
+    const _url = `${Config.API_ASSESS_URL}save-assessment9Q/`;
+    const _body = datas;
+    const _httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.post<any>(_url, _body, _httpOptions)
+      .pipe(
+        map(response => {
+          if (response) {
+            return response;
+          } else {
+            throw throwError(Config.ERROR_001);
+          }
+        }),
+        catchError(error => {
+          return throwError(error);
+        })
+      );
+  }
+
+
+  getsaveAssess8Q(datas: Data): Observable<any> {
+    const _url = `${Config.API_ASSESS_URL}save-assessment8Q/`;
+    const _body = datas;
+    const _httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type': 'application/json'
+      })
+    };
+    return this.http.post<any>(_url, _body, _httpOptions)
+      .pipe(
+        map(response => {
+          if (response) {
+            return response
+          } else {
+            throw throwError(Config.ERROR_001);
+          }
+        }),
+        catchError(error => {
+          return throwError(error);
+        })
+      );
+  }
+
 
   saveChangePassword(data: Data) {
     const _url = `${Config.API_PROFILE_URL}change-password/`;
@@ -515,4 +587,10 @@ getAssessByInspecionAndDate(datas: Data): Observable<any> {
         })
       );
   }
+}
+
+interface submitQ {
+  answer: number;
+  question_id: number;
+  userId: string;
 }

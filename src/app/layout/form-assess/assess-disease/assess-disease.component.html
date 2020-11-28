@@ -27,24 +27,68 @@
     </div>
   </div>
   <br>
-  <div *ngFor="let question of questions ; let i = index">
-    <div class="row">
-      <div class="col-lg-1"></div>
-      <div class="col-lg-9">
-        <h5>ข้อ {{i+1}} : {{question.questionName}}</h5>
-      </div>
-    </div>
-    <div *ngFor="let choice of question.choices ; let is = index">
+  <div *ngIf="Q2">
+    <div *ngFor="let question of questions ; let i = index">
       <div class="row">
-        <div class="col-lg-2"></div>
-        <div class="col-lg-10">
-          <input class="form-check-input" type="radio" name="criterion_{{i}}" value="{{choice.choiceCriterion}}" />
-            {{choice.choiceName}}
+        <div class="col-lg-1"></div>
+        <div class="col-lg-9">
+          <h5>ข้อ {{i+1}} : {{question.questionName}}</h5>
         </div>
       </div>
+      <div *ngFor="let choice of question.choices ; let is = index">
+        <div class="row">
+          <div class="col-lg-2"></div>
+          <div class="col-lg-10">
+            <input class="form-check-input" type="radio" name="criterion_{{i}}" value="{{choice.choiceCriterion}}" />
+              {{choice.choiceName}}
+          </div>
+        </div>
+      </div>
+      <hr>
     </div>
-    <hr>
   </div>
+  <div  *ngIf="!Q2 && !Q8">
+    <div *ngFor="let question of questions ; let i = index">
+      <div class="row">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-9">
+          <h5>ข้อ {{i+1}} : {{question.questionName}}</h5>
+        </div>
+      </div>
+      <div *ngFor="let choice of question.choices ; let is = index">
+        <div class="row">
+          <div class="col-lg-2"></div>
+          <div class="col-lg-10">
+            <input class="form-check-input" type="radio" name="criterion_{{i}}" value="{{choice.choiceCriterion}}" />
+              {{choice.choiceName}}
+          </div>
+        </div>
+      </div>
+      <hr>
+    </div>
+  </div>
+  <div *ngIf="Q8">
+    <div *ngFor="let question of questions ; let i = index">
+      <div class="row">
+        <div class="col-lg-1"></div>
+        <div class="col-lg-9">
+          <h5>ข้อ {{i+1}} : {{question.questionName}}</h5>
+        </div>
+      </div>
+        <div class="row">
+          <div class="col-lg-2"></div>
+          <div class="col-lg-10">
+            <label style="margin-right: 30px; padding: 5px;">จำนวนครั้ง : </label>
+            <input *ngIf="i+1 != 4 "class="form-check-input" type="int" name="criterion_{{i}}"  maxlength="5" (blur)="onChange(i+1)"/>
+            <input *ngIf="i+1 == 4 && !disabled" class="form-check-input" type="int" name="criterion_{{i}}"  maxlength="5" disabled/>
+            <input *ngIf="i+1 == 4 && disabled" class="form-check-input" type="int" name="criterion_{{i}}"  maxlength="5"/>
+
+          </div>
+        </div>
+      <hr>
+    </div>
+  </div>
+
   <!-- /.row -->
   <br>
   <div class="button">
@@ -53,7 +97,10 @@
     &nbsp;
     <button class="btn rounded-btn" (click)="onBack()">ยกเลิก</button> -->
 
-    <button class="button button1" (click)="onSubmitForm()">ยืนยัน</button>
+    <button *ngIf="!Q2 && !Q8 && !Q9" class="button button1" (click)="onSubmitForm()">ยืนยัน</button>
+    <button *ngIf="Q2" class="button button1" (click)="onSubmitForm2Q()">ยืนยัน</button>
+    <button *ngIf="Q8" class="button button1" (click)="onSubmitForm8Q()">ยืนยัน</button>
+    <button *ngIf="Q9" class="button button1" (click)="onSubmitForm9Q()">ยืนยัน</button>
     <button class="button button2" (click)="onBack()">ยกเลิก</button>
 
 

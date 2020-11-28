@@ -22,7 +22,7 @@ export class ManageQuestionComponent implements OnInit {
 
   getQuestion() {
     if (this.inspectionModelModule._inspectionId != '' && this.inspectionModelModule._inspectionId != null) {
-      this.apiService.getInspectionById(this.inspectionModelModule._inspectionId).subscribe(
+      this.apiService.getInspectionById(this.inspectionModelModule._inspectionId, 0).subscribe(
         () => {
           this.inspectionModel = this.inspectionModelModule._inspectionModel;
           this.questions = this.inspectionModel.questions;
