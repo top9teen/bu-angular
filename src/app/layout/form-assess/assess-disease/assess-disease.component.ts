@@ -190,7 +190,7 @@ export class AssessDiseaseComponent implements OnInit {
       console.log('result :: ' + JSON.stringify(this.result))
     this.apiService.getsaveAssess9Q(this.result).subscribe(
       (res: resultSubmit) => {
-        if(res.assessmentDetail){
+        if(res.criterionTotal >= 7){
             this.Q2 =  false;
             this.Q8 =  true;
             this.Q9 = false;
@@ -215,9 +215,16 @@ export class AssessDiseaseComponent implements OnInit {
     console.log('result :: ' + JSON.stringify(this.result))
 
     this.apiService.getsaveAssess2Q(this.result).subscribe(
-      () => {
+      (res: resultSubmit) => {
+        if(res.criterionTotal >= 17){
+          alert('ส่งต่อโรงพยาบาลมีจิตแพทย์ด่วน');
           this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
           this.router.navigate(['/form-assess/assess-ment']));
+        }else{
+          this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
+          this.router.navigate(['/form-assess/assess-ment']));
+        }
+
       }, (err) => {
         this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
         this.router.navigate(['/home']));
