@@ -99,8 +99,8 @@
 
     <button *ngIf="!Q2 && !Q8 && !Q9" class="button button1" (click)="onSubmitForm()" [disabled]="!choiceForm.valid">ยืนยัน</button>
     <button *ngIf="Q2" class="button button1" (click)="onSubmitForm2Q()" >ยืนยัน</button>
-    <button *ngIf="Q8" class="button button1" (click)="onSubmitForm8Q()" [disabled]="!choiceForm.valid">ยืนยัน</button>
-    <button *ngIf="Q9" class="button button1" (click)="onSubmitForm9Q()" [disabled]="!choiceForm.valid">ยืนยัน</button>
+    <button *ngIf="Q8" class="button button1" (click)="onSubmitForm8Q()" >ยืนยัน</button>
+    <button *ngIf="Q9" class="button button1" (click)="onSubmitForm9Q()" >ยืนยัน</button>
     <button class="button button2" (click)="onBack()">ยกเลิก</button>
 
 
