@@ -153,7 +153,6 @@ export class AssessDiseaseComponent implements OnInit {
             this.checkQ = 0;
             this.assessmentId = res.assessmentId;
             this.getQuestion(this.checkQ);
-            this.addFromSubmit(this.assessmentId);
          } else {
           this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
           this.router.navigate(['/form-assess/assess-ment']));
@@ -166,6 +165,7 @@ export class AssessDiseaseComponent implements OnInit {
   }
 
   onSubmitForm9Q() {
+    console.log('result :: ' + JSON.stringify(this.result));
     let answer = {} as SubmitQ;
     const sizeChoice = parseFloat((document.getElementById('sizeChoice') as HTMLInputElement).value);
       for (let i = 0; i < sizeChoice; i++) {
@@ -174,7 +174,15 @@ export class AssessDiseaseComponent implements OnInit {
         for (let t = 0; t < lengths; t++) {
           const s = (red[t] as HTMLInputElement);
           if (s.checked) {
-            answer.answer = t;
+            if(t==0){
+              answer.answer = 3;
+            }else if(t==1){
+              answer.answer = 2;
+            }else if(t==2){
+              answer.answer = 1;
+            }else{
+              answer.answer = 0;
+            }
             answer.userId = localStorage.getItem('userId');
             this.result.push(answer);
             answer = {} as SubmitQ;
@@ -259,8 +267,16 @@ export class AssessDiseaseComponent implements OnInit {
     console.log('data input :: ' + data);
     const texterror = /^[0-9]+$/;
     console.log('data if :: ' + texterror.test(data));
+    const red = document.getElementsByName('criterion_' + index);
+    const lengths = red.length;
+    for (let t = 0; t < lengths; t++) {
+        const s = (red[t] as HTMLInputElement);
+        console.log('s :: ' + JSON.stringify(s));
+    }
+    index += 1;
+    console.log('index + 1 :: ' + index);
     if (!texterror.test(data)) {
-      console.log('data if ===============' );
+      console.log('data if ===============');
       if (index === 3) {
         this.disabled = false;
       }

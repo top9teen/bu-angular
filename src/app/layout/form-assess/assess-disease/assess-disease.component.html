@@ -79,10 +79,8 @@
           <div class="col-lg-2"></div>
           <div class="col-lg-10">
             <label style="margin-right: 30px; padding: 5px;">จำนวนครั้ง : </label>
-            <input #data8Q *ngIf="i+1 != 4 " type="text" name="criterion_{{i}}"  maxlength="5" (blur)="onChange(i+1, data8Q.value, question.questionId)"/>
-            <input #quest4 *ngIf="i+1 == 4 && !disabled"  type="text" name="criterion_{{i}}"  maxlength="5" disabled/>
-            <input #quest4 *ngIf="i+1 == 4 && disabled"  type="text" name="criterion_{{i}}"  maxlength="5" (blur)="onChange(i+1,quest4.value,question.questionId)"/>
-
+            <input #data8Q *ngIf="i+1 != 4 " type="text" id="{{i}}" name="criterion_{{i}}"  maxlength="5" (blur)="onChange(i, data8Q.value, question.questionId)"/>
+            <input #quest4 *ngIf="i+1 == 4" [disabled]="!disabled"  type="text" id="3" name="criterion_{{i}}"  maxlength="5" (blur)="onChange(i,quest4.value,question.questionId)"/>
           </div>
         </div>
       <hr>
@@ -97,7 +95,7 @@
     &nbsp;
     <button class="btn rounded-btn" (click)="onBack()">ยกเลิก</button> -->
 
-    <button *ngIf="!Q2 && !Q8 && !Q9" class="button button1" (click)="onSubmitForm()" [disabled]="!choiceForm.valid">ยืนยัน</button>
+    <button *ngIf="!Q2 && !Q8 && !Q9" class="button button1" (click)="onSubmitForm()" >ยืนยัน</button>
     <button *ngIf="Q2" class="button button1" (click)="onSubmitForm2Q()" >ยืนยัน</button>
     <button *ngIf="Q8" class="button button1" (click)="onSubmitForm8Q()" >ยืนยัน</button>
     <button *ngIf="Q9" class="button button1" (click)="onSubmitForm9Q()" >ยืนยัน</button>
