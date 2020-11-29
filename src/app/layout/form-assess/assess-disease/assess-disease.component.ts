@@ -131,17 +131,22 @@ export class AssessDiseaseComponent implements OnInit {
           if (s.checked) {
             answer.answer = t;
             answer.userId = localStorage.getItem('userId');
+            const x = this.inspectionId;
+            const y: number = +x;
+            answer.question_id = y;
             this.result.push(answer);
             answer = {} as submitQ;
           }
         }
       }
-      for(let j = 0; j < this.questions.length; j++){
-        this.result[j].question_id =+ this.questions[j].questionId;
-      }
+      // for(let j = 0; j < this.questions.length; j++){
+      //   this.result[j].question_id =+ this.questions[j].questionId;
+      // }
       console.log('result :: ' + JSON.stringify(this.result))
     this.apiService.getsaveAssess2Q(this.result).subscribe(
       (res) => {
+        console.log(JSON.stringify(res));
+        
         if(res){
             this.Q2 =  false;
             this.Q8 =  false;
