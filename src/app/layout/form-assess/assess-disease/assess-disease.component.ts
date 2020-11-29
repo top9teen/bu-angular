@@ -141,7 +141,7 @@ export class AssessDiseaseComponent implements OnInit {
         }
       }
       for(let j = 0; j < this.questions.length; j++){
-        this.result[j].question_id =+ this.questions[j].questionId;
+        this.result[j].question_id =+ this.inspectionId;
         this.result[j].assessmentId = this.assessmentId;
       }
       console.log('result :: ' + JSON.stringify(this.result))
@@ -184,7 +184,7 @@ export class AssessDiseaseComponent implements OnInit {
         }
       }
       for(let j = 0; j < this.questions.length; j++){
-        this.result[j].question_id =+ this.questions[j].questionId;
+        this.result[j].question_id =+ this.inspectionId;
         this.result[j].assessmentId = this.assessmentId;
       }
       console.log('result :: ' + JSON.stringify(this.result))
@@ -209,7 +209,11 @@ export class AssessDiseaseComponent implements OnInit {
   }
 
   onSubmitForm8Q() {
+    for(let j = 0; j < this.questions.length; j++){
+      this.result[j].question_id =+ this.inspectionId;
+    }
     console.log('result :: ' + JSON.stringify(this.result))
+
     this.apiService.getsaveAssess2Q(this.result).subscribe(
       () => {
           this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
@@ -243,6 +247,7 @@ export class AssessDiseaseComponent implements OnInit {
       }
     }
   }
+
   onChange(index: number, data: string, questId: number){
     console.log("index input :: " + index);
     console.log("questId  :: " + questId);
