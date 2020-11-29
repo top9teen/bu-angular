@@ -30,6 +30,7 @@ export class AssessDiseaseComponent implements OnInit {
   inspectionName: String;
   checkQ: number = 0;
   disabled: boolean = false;
+  assessmentId:number = 0;
   Q2: boolean = false;
   Q8: boolean = false;
   Q9: boolean = false;
@@ -60,7 +61,7 @@ export class AssessDiseaseComponent implements OnInit {
           this.questions = this.inspectionModel.questions;
           this.inspectionName = this.inspectionModel.inspectionName;
           if(Q==8){
-            this.addFromSubmit();
+            this.addFromSubmit(this.assessmentId);
           }
         }, (err) => {
           console.log('error -> ', err);
@@ -139,19 +140,22 @@ export class AssessDiseaseComponent implements OnInit {
           }
         }
       }
-      // for(let j = 0; j < this.questions.length; j++){
-      //   this.result[j].question_id =+ this.questions[j].questionId;
-      // }
+      for(let j = 0; j < this.questions.length; j++){
+        this.result[j].question_id =+ this.questions[j].questionId;
+        this.result[j].assessmentId = this.assessmentId;
+      }
       console.log('result :: ' + JSON.stringify(this.result))
     this.apiService.getsaveAssess2Q(this.result).subscribe(
-      (res) => {
+      (res: resultSubmit) => {
         console.log(JSON.stringify(res));
-        
-        if(res){
+        if(res.assessmentDetail.includes('เป็นผู้มีความเสี่ยง')){
             this.Q2 =  false;
             this.Q8 =  false;
             this.Q9 = true;
             this.checkQ = 0;
+            this.assessmentId = res.assessmentId;
+            this.getQuestion(this.checkQ);
+            this.addFromSubmit(this.assessmentId);
         }else{
           this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
           this.router.navigate(['/form-assess/assess-ment']));
@@ -181,17 +185,18 @@ export class AssessDiseaseComponent implements OnInit {
       }
       for(let j = 0; j < this.questions.length; j++){
         this.result[j].question_id =+ this.questions[j].questionId;
+        this.result[j].assessmentId = this.assessmentId;
       }
       console.log('result :: ' + JSON.stringify(this.result))
     this.apiService.getsaveAssess9Q(this.result).subscribe(
-      (res) => {
-        if(res){
+      (res: resultSubmit) => {
+        if(res.assessmentDetail){
             this.Q2 =  false;
             this.Q8 =  true;
             this.Q9 = false;
             this.checkQ = 8;
+            this.assessmentId = res.assessmentId;
             this.getQuestion(this.checkQ);
-            this.addFromSubmit();
         }else{
           this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
           this.router.navigate(['/form-assess/assess-ment']));
@@ -225,13 +230,14 @@ export class AssessDiseaseComponent implements OnInit {
   //     var d = document.getElementsByName("criterion_0");
   //  }
 
-  addFromSubmit(){
+  addFromSubmit(assessmentId: number){
     this.result = [];
     if(this.questions.length > 0){
       let answer = {} as submitQ;
       for(let j = 0; j < this.questions.length; j++){
           answer.question_id =+ this.questions[j].questionId;
           answer.userId = localStorage.getItem('userId');
+          answer.assessmentId = assessmentId;
           this.result.push(answer);
           answer = {} as submitQ;
       }
@@ -287,7 +293,24 @@ export class AssessDiseaseComponent implements OnInit {
 }
 
 interface submitQ {
+  assessmentId: number;
   answer: number;
   question_id: number;
   userId: string;
+}
+
+interface a {
+  answer: number;
+  question_id: number;
+  userId: string;
+}
+
+interface resultSubmit{
+  assessmentDetail: string;
+  assessmentId: number;
+  createDate: Date;
+  inspetionDetail: string;
+  userId: string;
+  inspectionId: number;
+  criterionTotal: number;
 }

@@ -590,6 +590,7 @@ getAssessByInspecionAndDate(datas: Data): Observable<any> {
 }
 
 interface submitQ {
+  assessmentId: number;
   answer: number;
   question_id: number;
   userId: string;
