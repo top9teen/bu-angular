@@ -120,6 +120,7 @@ export class AssessDiseaseComponent implements OnInit {
   }
 
  onSubmitForm2Q() {
+    this.result = [];
     let answer = {} as SubmitQ;
     const sizeChoice = parseFloat((document.getElementById('sizeChoice') as HTMLInputElement).value);
       for (let i = 0; i < sizeChoice; i++) {
@@ -138,34 +139,42 @@ export class AssessDiseaseComponent implements OnInit {
           }
         }
       }
-      for (let j = 0; j < this.questions.length; j++) {
-        this.result[j].question_id = + this.inspectionId;
-        this.result[j].assessmentId = this.assessmentId;
-      }
-      console.log('result :: ' + JSON.stringify(this.result));
-    this.apiService.getsaveAssess2Q(this.result).subscribe(
-      (res: ResultSubmit) => {
-        console.log(JSON.stringify(res));
-        if (res.status) {
-            this.Q2 =  false;
-            this.Q8 =  false;
-            this.Q9 = true;
-            this.checkQ = 0;
-            this.assessmentId = res.assessmentId;
-            this.getQuestion(this.checkQ);
-         } else {
-          this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
-          this.router.navigate(['/form-assess/assess-ment']));
+      if(this.result.length > 0 && this.result.length === this.questions.length){
+        for (let j = 0; j < this.questions.length; j++) {
+          this.result[j].question_id = + this.inspectionId;
+          this.result[j].assessmentId = this.assessmentId;
         }
-      }, (err) => {
-        this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
-        this.router.navigate(['/home']));
-      });
-    this.result = [];
+        // console.log('result :: ' + JSON.stringify(this.result));
+        this.apiService.getsaveAssess2Q(this.result).subscribe(
+          (res: ResultSubmit) => {
+            console.log(JSON.stringify(res));
+            if (res.status) {
+                this.Q2 =  false;
+                this.Q8 =  false;
+                this.Q9 = true;
+                this.checkQ = 0;
+                this.assessmentId = res.assessmentId;
+                this.getQuestion(this.checkQ);
+            } else {
+              this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
+              this.router.navigate(['/form-assess/assess-ment']));
+            }
+          }, (err) => {
+            this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
+            this.router.navigate(['/home']));
+          });
+        this.result = [];
+
+      }else{
+        alert('กรุณาเลือกคำตอบ')
+      }
+
+
   }
 
   onSubmitForm9Q() {
-    console.log('result :: ' + JSON.stringify(this.result));
+    // console.log('result :: ' + JSON.stringify(this.result));
+    this.result = [];
     let answer = {} as SubmitQ;
     const sizeChoice = parseFloat((document.getElementById('sizeChoice') as HTMLInputElement).value);
       for (let i = 0; i < sizeChoice; i++) {
@@ -189,53 +198,66 @@ export class AssessDiseaseComponent implements OnInit {
           }
         }
       }
-      for (let j = 0; j < this.questions.length; j++) {
-        this.result[j].question_id = + this.inspectionId;
-        this.result[j].assessmentId = this.assessmentId;
-      }
-      console.log('result :: ' + JSON.stringify(this.result));
-    this.apiService.getsaveAssess9Q(this.result).subscribe(
-      (res: ResultSubmit) => {
-        if (res.status) {
-            this.Q2 =  false;
-            this.Q8 =  true;
-            this.Q9 = false;
-            this.checkQ = 8;
-            this.assessmentId = res.assessmentId;
-            this.getQuestion(this.checkQ);
-        } else {
-          this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
-          this.router.navigate(['/form-assess/assess-ment']));
+      if(this.result.length > 0 && this.result.length === this.questions.length){
+        for (let j = 0; j < this.questions.length; j++) {
+          this.result[j].question_id = + this.inspectionId;
+          this.result[j].assessmentId = this.assessmentId;
         }
-      }, (err) => {
-        this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
-        this.router.navigate(['/home']));
-      });
-    this.result = [];
+        // console.log('result :: ' + JSON.stringify(this.result));
+        this.apiService.getsaveAssess9Q(this.result).subscribe(
+        (res: ResultSubmit) => {
+          if (res.status) {
+              this.Q2 =  false;
+              this.Q8 =  true;
+              this.Q9 = false;
+              this.checkQ = 8;
+              this.assessmentId = res.assessmentId;
+              this.getQuestion(this.checkQ);
+          } else {
+            this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
+            this.router.navigate(['/form-assess/assess-ment']));
+          }
+        }, (err) => {
+          this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
+          this.router.navigate(['/home']));
+        });
+        this.result = [];
+      }else{
+        alert('กรุณาเลือกคำตอบ')
+      }
   }
 
   onSubmitForm8Q() {
-    for (let j = 0; j < this.questions.length; j++) {
-      this.result[j].question_id = + this.inspectionId;
+    let checkAnser = true;
+    for (let j = 0; j < this.result.length; j++) {
+      if(this.result[j].answer === null){
+        checkAnser = false;
+        alert('กรุณากรอกคำตอบ')
+        break;
+      }
     }
-    console.log('result :: ' + JSON.stringify(this.result));
+    // console.log('result :: ' + JSON.stringify(this.result));
+    if(checkAnser){
+      for (let j = 0; j < this.result.length; j++) {
+        this.result[j].question_id =+ this.inspectionId;
+      }
+      this.apiService.getsaveAssess8Q(this.result).subscribe(
+        (res: ResultSubmit) => {
+          if (res.status) {
+            alert(res.detail);
+            this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
+            this.router.navigate(['/form-assess/assess-ment']));
+          } else {
+            this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
+            this.router.navigate(['/form-assess/assess-ment']));
+          }
 
-    this.apiService.getsaveAssess2Q(this.result).subscribe(
-      (res: ResultSubmit) => {
-        if (res.status) {
-          alert(res.detail);
+        }, (err) => {
           this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
-          this.router.navigate(['/form-assess/assess-ment']));
-        } else {
-          this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
-          this.router.navigate(['/form-assess/assess-ment']));
-        }
-
-      }, (err) => {
-        this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
-        this.router.navigate(['/home']));
-      });
-    this.result = [];
+          this.router.navigate(['/home']));
+        });
+      this.result = [];
+    }
   }
 
   // /form-assess/assess-disease
@@ -252,6 +274,7 @@ export class AssessDiseaseComponent implements OnInit {
     if (this.questions.length > 0) {
       let answer = {} as SubmitQ;
       for (let j = 0; j < this.questions.length; j++) {
+          answer.answer = null;
           answer.question_id = + this.questions[j].questionId;
           answer.userId = localStorage.getItem('userId');
           answer.assessmentId = assessmentId;
@@ -262,35 +285,22 @@ export class AssessDiseaseComponent implements OnInit {
   }
 
   onChange(index: number, data: string, questId: number) {
-    console.log('index input :: ' + index);
-    console.log('questId  :: ' + questId);
-    console.log('data input :: ' + data);
     const texterror = /^[0-9]+$/;
-    console.log('data if :: ' + texterror.test(data));
-    const red = document.getElementsByName('criterion_' + index);
-    const lengths = red.length;
-    for (let t = 0; t < lengths; t++) {
-        const s = (red[t] as HTMLInputElement);
-        console.log('s :: ' + JSON.stringify(s));
-    }
-    index += 1;
-    console.log('index + 1 :: ' + index);
     if (!texterror.test(data)) {
-      console.log('data if ===============');
+      const red = document.getElementsByName('criterion_' + index);
+      const lengths = red.length;
+      for (let t = 0; t < lengths; t++) {
+          const s = (red[t] as HTMLInputElement);
+          s.value = '';
+      }
+      index++;
       if (index === 3) {
         this.disabled = false;
       }
-      if (this.result.length > 0) {
-        for (let j = 0; j < this.result.length; j++) {
-          if (this.result[j].question_id === questId) {
-              this.result[j].answer = 0;
-            break;
-          }
-        }
-      }
     } else {
-        if (index === 3) {
-          this.disabled = true;
+        index++;
+        if (index === 3 ) {
+          this.disabled = data !== '0' ? true : false;
         }
       if (this.result.length > 0) {
         for (let j = 0; j < this.result.length; j++) {
@@ -301,7 +311,7 @@ export class AssessDiseaseComponent implements OnInit {
         }
       }
     }
-    console.log('result :: ' + JSON.stringify(this.result));
+    // console.log('result :: ' + JSON.stringify(this.result));
   }
 
   onBack() {
