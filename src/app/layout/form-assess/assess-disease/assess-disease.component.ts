@@ -111,8 +111,8 @@ export class AssessDiseaseComponent implements OnInit {
     this.apiService.getsaveAssess(jsondata).subscribe(
       () => {
          this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
-         this.router.navigate(['/form-assess/assess-ment']));
-      }, (err) => {
+         this.router.navigate(['/home']));
+        }, (err) => {
         this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
         this.router.navigate(['/home']));
       });
@@ -157,7 +157,7 @@ export class AssessDiseaseComponent implements OnInit {
                 this.getQuestion(this.checkQ);
             } else {
               this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
-              this.router.navigate(['/form-assess/assess-ment']));
+              this.router.navigate(['/home']));
             }
           }, (err) => {
             this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
@@ -215,7 +215,7 @@ export class AssessDiseaseComponent implements OnInit {
               this.getQuestion(this.checkQ);
           } else {
             this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
-            this.router.navigate(['/form-assess/assess-ment']));
+            this.router.navigate(['/home']));
           }
         }, (err) => {
           this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
@@ -246,10 +246,10 @@ export class AssessDiseaseComponent implements OnInit {
           if (res.status) {
             alert(res.detail);
             this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
-            this.router.navigate(['/form-assess/assess-ment']));
+            this.router.navigate(['/home']));
           } else {
             this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
-            this.router.navigate(['/form-assess/assess-ment']));
+            this.router.navigate(['/home']));
           }
 
         }, (err) => {
