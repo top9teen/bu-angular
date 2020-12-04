@@ -3,7 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiServiceModule } from '../../api-service/api-service.module';
-import { InspectionModel, InspectionModelModule, QuestionModel } from '../../model/inspection-model/inspection-model';
+import { InspectionModel, InspectionModelModule, QuestionModel, ChoiceModel } from '../../model/inspection-model/inspection-model';
 
 @Component({
   selector: 'app-assess-disease',
@@ -75,7 +75,6 @@ export class AssessDiseaseComponent implements OnInit {
       this.Q2 =  true;
     } else {
       this.checkQ = 0;
-      this.Q2 = false;
       this.Q8 = false;
       this.Q9 = false;
     }
@@ -156,6 +155,7 @@ export class AssessDiseaseComponent implements OnInit {
                 this.assessmentId = res.assessmentId;
                 this.getQuestion(this.checkQ);
             } else {
+              alert('คุญไม่อยู่ในกลุ่มผู้มีความเสี่ยงของโรคซึมเศร้า');
               this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
               this.router.navigate(['/home']));
             }
@@ -214,6 +214,7 @@ export class AssessDiseaseComponent implements OnInit {
               this.assessmentId = res.assessmentId;
               this.getQuestion(this.checkQ);
           } else {
+            alert('คุณไม่มีอาการของโรคซึมเศร้าหรือมีอาการของโรคซึมเศร้าระดับน้อยมาก');
             this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
             this.router.navigate(['/home']));
           }
@@ -229,6 +230,7 @@ export class AssessDiseaseComponent implements OnInit {
 
   onSubmitForm8Q() {
     let checkAnser = true;
+    console.log('result :: ' + JSON.stringify(this.result));
     for (let j = 0; j < this.result.length; j++) {
       if(this.result[j].answer === null){
         checkAnser = false;
@@ -236,7 +238,7 @@ export class AssessDiseaseComponent implements OnInit {
         break;
       }
     }
-    // console.log('result :: ' + JSON.stringify(this.result));
+    
     if(checkAnser){
       for (let j = 0; j < this.result.length; j++) {
         this.result[j].question_id =+ this.inspectionId;
@@ -248,6 +250,7 @@ export class AssessDiseaseComponent implements OnInit {
             this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
             this.router.navigate(['/home']));
           } else {
+            alert('คุณมีแนวโน้มการฆ่าตัวตายในปัจจุบันอยู่ในระดับไม่ร้ายแรง');
             this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
             this.router.navigate(['/home']));
           }
@@ -282,6 +285,45 @@ export class AssessDiseaseComponent implements OnInit {
           answer = {} as SubmitQ;
       }
     }
+    // console.log('this.result :: ' + JSON.stringify(this.result))
+  }
+
+  check8Q(index: number, data: string, questId: number){
+    let num = '' + index;
+    let N = '0_' + index;
+    let Y = '1_' + index;
+    if (data === 'Y') {
+      document.getElementById(num).disabled = false;
+      document.getElementById(N).checked = false;
+      document.getElementById(Y).checked = true;
+    }
+    if (data === 'N') {
+      document.getElementById(num).disabled = true;
+      document.getElementById(N).checked = true;
+      document.getElementById(Y).checked = false;
+      const red = document.getElementsByName('criterion_' + index);
+      const lengths = red.length;
+      for (let t = 0; t < lengths; t++) {
+          const s = (red[t] as HTMLInputElement);
+          s.value = '0';
+      }
+      for (let j = 0; j < this.result.length; j++) {
+        if (this.result[j].question_id === questId) {
+            if(questId === 3) {
+              this.result[j+1].answer = 0;
+              document.getElementById('0_3').checked = true;
+              const red = document.getElementsByName('criterion_3');
+              const lengths = red.length;
+              for (let t = 0; t < lengths; t++) {
+                  const s = (red[t] as HTMLInputElement);
+                  s.value = '0';
+              }
+            }
+            this.result[j].answer = 0;
+          break;
+        }
+      }
+    }
   }
 
   onChange(index: number, data: string, questId: number) {
@@ -296,6 +338,12 @@ export class AssessDiseaseComponent implements OnInit {
       index++;
       if (index === 3) {
         this.disabled = false;
+        const red = document.getElementsByName('criterion_' + index);
+        const lengths = red.length;
+        for (let t = 0; t < lengths; t++) {
+            const s = (red[t] as HTMLInputElement);
+            s.value = '';
+        }
       }
     } else {
         index++;
@@ -339,4 +387,9 @@ interface ResultSubmit {
   assessmentId: number;
   status: boolean;
   detail: string;
+}
+
+interface fff {
+  a: boolean;
+  b: string;
 }

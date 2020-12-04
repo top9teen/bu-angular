@@ -72,17 +72,21 @@
       <div class="row">
         <div class="col-lg-1"></div>
         <div class="col-lg-9">
-          <h5>ข้อ {{i+1}} : {{question.questionName}}</h5>
+          <h5 *ngIf="i+1 != 4 " >ข้อ {{i+1}} : {{question.questionName}}</h5>
+          <h5 *ngIf="i+1 == 4" >ข้อ 3.1 : {{question.questionName}}</h5>
         </div>
       </div>
-        <div class="row">
-          <div class="col-lg-2"></div>
-          <div class="col-lg-10">
-            <label style="margin-right: 30px; padding: 5px;">จำนวนครั้ง : </label>
-            <input #data8Q *ngIf="i+1 != 4 " type="text" id="{{i}}" name="criterion_{{i}}"  maxlength="5" (blur)="onChange(i, data8Q.value, question.questionId)"/>
-            <input #quest4 *ngIf="i+1 == 4" [disabled]="!disabled"  type="text" id="3" name="criterion_{{i}}"  maxlength="5" (blur)="onChange(i,quest4.value,question.questionId)"/>
-          </div>
+      <div class="row">
+        <div class="col-lg-2"></div>
+        <div class="col-lg-10 inli" >
+          <input *ngIf="i+1 != 4 " (click)="check8Q(i,'N',question.questionId)" type="radio" name="checkN_{{i}}" value="0" id="0_{{i}}" ><span *ngIf="i+1 != 4 ">ไม่มี</span>
+          <input *ngIf="i+1 != 4 " (click)="check8Q(i,'Y',question.questionId)" type="radio" name="checkY_{{i}}"  value="1" id="1_{{i}}" style="margin-left: 12px;" class="form-check-input"><span style="margin-left: 35px;" *ngIf="i+1 != 4 ">มี</span>
+          <input *ngIf="i+1 == 4" [disabled]="!disabled"  (click)="check8Q(i,'N',question.questionId)" type="radio" name="checkN_{{i}}" value="0" id="0_{{i}}" ><span *ngIf="i+1 == 4">ไม่มี</span>
+          <input *ngIf="i+1 == 4" [disabled]="!disabled"  (click)="check8Q(i,'Y',question.questionId)" type="radio" name="checkY_{{i}}"  value="1" id="1_{{i}}" style="margin-left: 12px;" class="form-check-input"><span style="margin-left: 35px;" *ngIf="i+1 == 4">มี</span>
+          <label style="margin-left: 30px; padding: 5px;">จำนวนครั้ง : </label>
+          <input #data8Q  disabled="disabled" type="text" id="{{i}}" name="criterion_{{i}}"  maxlength="5" (blur)="onChange(i, data8Q.value, question.questionId)" />
         </div>
+      </div>
       <hr>
     </div>
   </div>
