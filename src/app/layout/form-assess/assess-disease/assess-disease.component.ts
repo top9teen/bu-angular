@@ -294,37 +294,60 @@ export class AssessDiseaseComponent implements OnInit {
     let Y = '1_' + index;
     if (data === 'Y') {
       
-      (<HTMLInputElement> document.getElementById(num)).disabled = false;
       (<HTMLInputElement> document.getElementById(N)).checked = false;
       (<HTMLInputElement>  document.getElementById(Y)).checked = true;
+      for (let j = 0; j < this.result.length; j++) {
+        if (this.result[j].question_id === questId) {
+          if (questId === 1) {
+            this.result[j].answer = 1;
+            break;
+          }else if (questId === 2) {
+            this.result[j].answer = 2;
+            break;
+          }else if (questId === 3) {
+            this.result[j].answer = 6;
+            this.disabled = true;
+            break;
+          }else if (questId === 4) {
+            this.result[j].answer = 8;
+            break;
+          }else if (questId === 5) {
+            this.result[j].answer = 8;
+            break;
+          }else if (questId === 6) {
+            this.result[j].answer = 9;
+            break;
+          }else if (questId === 7) {
+            this.result[j].answer = 4;
+            break;
+          }else if (questId === 8) {
+              this.result[j].answer = 10;
+              break;
+          }else if (questId === 9) {
+              this.result[j].answer = 4;
+              break;
+          }
+        }
+      }
+
     }
     if (data === 'N') {
-      (<HTMLInputElement> document.getElementById(num)).disabled = true;
       (<HTMLInputElement> document.getElementById(N)).checked = true;
       (<HTMLInputElement>  document.getElementById(Y)).checked = false;
-      const red = document.getElementsByName('criterion_' + index);
-      const lengths = red.length;
-      for (let t = 0; t < lengths; t++) {
-          const s = (red[t] as HTMLInputElement);
-          s.value = '0';
-      }
       for (let j = 0; j < this.result.length; j++) {
         if (this.result[j].question_id === questId) {
             if(questId === 3) {
+              this.disabled = false;
               this.result[j+1].answer = 0;
               (<HTMLInputElement> document.getElementById('0_3')).checked = true;
-              const red = document.getElementsByName('criterion_3');
-              const lengths = red.length;
-              for (let t = 0; t < lengths; t++) {
-                  const s = (red[t] as HTMLInputElement);
-                  s.value = '0';
-              }
             }
             this.result[j].answer = 0;
           break;
         }
       }
     }
+        // console.log('this.result :: ' + JSON.stringify(this.result))
+
   }
 
   onChange(index: number, data: string, questId: number) {
