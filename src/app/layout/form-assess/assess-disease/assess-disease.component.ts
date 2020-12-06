@@ -293,14 +293,15 @@ export class AssessDiseaseComponent implements OnInit {
     let N = '0_' + index;
     let Y = '1_' + index;
     if (data === 'Y') {
-      document.getElementById(num).disabled = false;
-      document.getElementById(N).checked = false;
-      document.getElementById(Y).checked = true;
+      
+      (<HTMLInputElement> document.getElementById(num)).disabled = false;
+      (<HTMLInputElement> document.getElementById(N)).checked = false;
+      (<HTMLInputElement>  document.getElementById(Y)).checked = true;
     }
     if (data === 'N') {
-      document.getElementById(num).disabled = true;
-      document.getElementById(N).checked = true;
-      document.getElementById(Y).checked = false;
+      (<HTMLInputElement> document.getElementById(num)).disabled = true;
+      (<HTMLInputElement> document.getElementById(N)).checked = true;
+      (<HTMLInputElement>  document.getElementById(Y)).checked = false;
       const red = document.getElementsByName('criterion_' + index);
       const lengths = red.length;
       for (let t = 0; t < lengths; t++) {
@@ -311,7 +312,7 @@ export class AssessDiseaseComponent implements OnInit {
         if (this.result[j].question_id === questId) {
             if(questId === 3) {
               this.result[j+1].answer = 0;
-              document.getElementById('0_3').checked = true;
+              (<HTMLInputElement> document.getElementById('0_3')).checked = true;
               const red = document.getElementsByName('criterion_3');
               const lengths = red.length;
               for (let t = 0; t < lengths; t++) {
