@@ -148,6 +148,7 @@ export class AssessDiseaseComponent implements OnInit {
           (res: ResultSubmit) => {
             console.log(JSON.stringify(res));
             if (res.status) {
+              alert('เป็นผู้มีความเสี่ยง หรือ มีแนวโน้มที่จะเป็นโรคซึมเศร้า ให้ประเมินต่อด้วยแบบประเมิน โรคซึมเศร้า 9Q');
                 this.Q2 =  false;
                 this.Q8 =  false;
                 this.Q9 = true;
@@ -155,7 +156,7 @@ export class AssessDiseaseComponent implements OnInit {
                 this.assessmentId = res.assessmentId;
                 this.getQuestion(this.checkQ);
             } else {
-              alert('คุญไม่อยู่ในกลุ่มผู้มีความเสี่ยงของโรคซึมเศร้า');
+              alert('ปกติ ไม่เป็นโรคซึมเศร้า');
               this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
               this.router.navigate(['/home']));
             }
@@ -165,8 +166,8 @@ export class AssessDiseaseComponent implements OnInit {
           });
         this.result = [];
 
-      }else{
-        alert('กรุณาเลือกคำตอบ')
+      } else {
+        alert('กรุณาเลือกคำตอบ');
       }
 
 
@@ -184,13 +185,13 @@ export class AssessDiseaseComponent implements OnInit {
           const s = (red[t] as HTMLInputElement);
           if (s.checked) {
             if(t==0){
-              answer.answer = 3;
-            }else if(t==1){
-              answer.answer = 2;
-            }else if(t==2){
-              answer.answer = 1;
-            }else{
               answer.answer = 0;
+            }else if(t==1){
+              answer.answer = 1;
+            }else if(t==2){
+              answer.answer = 2;
+            }else{
+              answer.answer = 3;
             }
             answer.userId = localStorage.getItem('userId');
             this.result.push(answer);
@@ -207,6 +208,7 @@ export class AssessDiseaseComponent implements OnInit {
         this.apiService.getsaveAssess9Q(this.result).subscribe(
         (res: ResultSubmit) => {
           if (res.status) {
+            alert(res.detail);
               this.Q2 =  false;
               this.Q8 =  true;
               this.Q9 = false;
@@ -214,7 +216,7 @@ export class AssessDiseaseComponent implements OnInit {
               this.assessmentId = res.assessmentId;
               this.getQuestion(this.checkQ);
           } else {
-            alert('คุณไม่มีอาการของโรคซึมเศร้าหรือมีอาการของโรคซึมเศร้าระดับน้อยมาก');
+            alert('ไม่มีอาการของโรคซึมเศร้าหรือมีอาการของโรคซึมเศร้า ระดับน้อยมาก');
             this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
             this.router.navigate(['/home']));
           }
@@ -238,7 +240,7 @@ export class AssessDiseaseComponent implements OnInit {
         break;
       }
     }
-    
+
     if(checkAnser){
       for (let j = 0; j < this.result.length; j++) {
         this.result[j].question_id =+ this.inspectionId;
@@ -250,7 +252,7 @@ export class AssessDiseaseComponent implements OnInit {
             this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
             this.router.navigate(['/home']));
           } else {
-            alert('คุณมีแนวโน้มการฆ่าตัวตายในปัจจุบันอยู่ในระดับไม่ร้ายแรง');
+            alert(res.detail);
             this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
             this.router.navigate(['/home']));
           }
@@ -293,7 +295,7 @@ export class AssessDiseaseComponent implements OnInit {
     let N = '0_' + index;
     let Y = '1_' + index;
     if (data === 'Y') {
-      
+
       (<HTMLInputElement> document.getElementById(N)).checked = false;
       (<HTMLInputElement>  document.getElementById(Y)).checked = true;
       for (let j = 0; j < this.result.length; j++) {
