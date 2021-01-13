@@ -19,114 +19,148 @@
 </form>
 <br>
 <br>
-<form [formGroup]="choiceForm">
-  <input type="hidden" id="sizeChoice" name="sizeData" value="{{questions.length}}">
-  <div class="row">
+<div *ngIf="!T_Sum">
+  <form [formGroup]="choiceForm">
+    <input type="hidden" id="sizeChoice" name="sizeData" value="{{questions.length}}">
+    <div class="row">
+      <div class="col-lg-12">
+        <h4>ชื่อโรค/คัดกรอง : {{inspectionName}}</h4>
+      </div>
+    </div>
+    <br>
+    <div *ngIf="Q2">
+      <div class="row">
+        <div class="col-lg-12">
+          <h4 style="margin-left: 3%;">แบบคัดกรองโรคซึมเศร้า 2 คำถาม(2Q)</h4>
+        </div>
+      </div>
+      <div *ngFor="let question of questions ; let i = index">
+        <div class="row">
+          <div class="col-lg-1"></div>
+          <div class="col-lg-9">
+            <h5>ข้อ {{i+1}} : {{question.questionName}}</h5>
+          </div>
+        </div>
+        <div *ngFor="let choice of question.choices ; let is = index">
+          <div class="row">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-10">
+              <input class="form-check-input" type="radio" name="criterion_{{i}}" value="{{choice.choiceCriterion}}" />
+                {{choice.choiceName}}
+            </div>
+          </div>
+        </div>
+        <hr>
+      </div>
+    </div>
+    <div  *ngIf="!Q2 && !Q8">
+      <div class="row" *ngIf="Q9">
+        <div class="col-lg-12">
+          <h4 style="margin-left: 3%;">แบบประเมินโรคซึมเศร้า 9 คำถาม(9Q)</h4>
+        </div>
+      </div>
+      <div *ngFor="let question of questions ; let i = index">
+        <div class="row">
+          <div class="col-lg-1"></div>
+          <div class="col-lg-9">
+            <h5>ข้อ {{i+1}} : {{question.questionName}}</h5>
+          </div>
+        </div>
+        <div *ngFor="let choice of question.choices ; let is = index">
+          <div class="row">
+            <div class="col-lg-2"></div>
+            <div class="col-lg-10">
+              <input class="form-check-input" type="radio" name="criterion_{{i}}" value="{{choice.choiceCriterion}}" />
+                {{choice.choiceName}}
+            </div>
+          </div>
+        </div>
+        <hr>
+      </div>
+    </div>
+    <div *ngIf="Q8">
+      <div class="row">
+        <div class="col-lg-12">
+          <h4 style="margin-left: 3%;">แบบประเมินการฆ่าตัวตาย 8 คำถาม(8Q)</h4>
+        </div>
+      </div>
+      <div *ngFor="let question of questions ; let i = index">
+        <div class="row">
+          <div class="col-lg-1"></div>
+          <div class="col-lg-9">
+            <h5 *ngIf="i+1 < 4 " >ข้อ {{i+1}} : {{question.questionName}}</h5>
+            <h5 *ngIf="i+1 == 4" >ข้อ 3.1 : {{question.questionName}}</h5>
+            <h5 *ngIf="i+1 >= 5" >ข้อ {{i}} : {{question.questionName}}</h5>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-2"></div>
+          <div class="col-lg-10 " >
+            <input *ngIf="i+1 != 4 " (click)="check8Q(i,'Y',question.questionId)" type="radio" name="checkY_{{i}}"  value="1" id="1_{{i}}"  class="form-check-input"><span  *ngIf="i+1 != 4 ">มี</span>
+            <input *ngIf="i+1 == 4" [disabled]="!disabled"  (click)="check8Q(i,'N',question.questionId)" type="radio" name="checkN_{{i}}"  value="1" id="0_{{i}}"  class="form-check-input"><span  *ngIf="i+1 == 4">ได้</span>
+          </div>
+        </div>
+        <div class="row">
+          <div class="col-lg-2"></div>
+          <div class="col-lg-10 " >
+            <input *ngIf="i+1 != 4 " (click)="check8Q(i,'N',question.questionId)" type="radio" name="checkN_{{i}}" value="0" id="0_{{i}}" class="form-check-input"><span *ngIf="i+1 != 4 ">ไม่มี</span>
+            <input *ngIf="i+1 == 4" [disabled]="!disabled"  (click)="check8Q(i,'Y',question.questionId)" type="radio" name="checkY_{{i}}" value="0" id="1_{{i}}" class="form-check-input"><span *ngIf="i+1 == 4">ไม่ได้</span>
+          </div>
+        </div>
+        <hr>
+      </div>
+    </div>
+
+    <!-- /.row -->
+    <br>
+    <div class="button">
+      <!-- <div class="col-lg-1"></div> -->
+      <!-- <button class="btn rounded-btn" (click)="onSubmitForm()">ยืนยัน</button>
+      &nbsp;
+      <button class="btn rounded-btn" (click)="onBack()">ยกเลิก</button> -->
+
+      <button *ngIf="!Q2 && !Q8 && !Q9" class="button button1" (click)="onSubmitForm()" >ยืนยัน</button>
+      <button *ngIf="Q2" class="button button1" (click)="onSubmitForm2Q()" >ยืนยัน</button>
+      <button *ngIf="Q8" class="button button1" (click)="onSubmitForm8Q()" >ยืนยัน</button>
+      <button *ngIf="Q9" class="button button1" (click)="onSubmitForm9Q()" >ยืนยัน</button>
+      <button class="button button2" (click)="onBack()">ยกเลิก</button>
+
+
+    </div>
+    <br>
+  </form>
+</div>
+
+<div *ngIf="T_Sum">
     <div class="col-lg-12">
-      <h4>ชื่อโรค/คัดกรอง : {{inspectionName}}</h4>
+      <h4>สรุปผลการประเมินเบื้องต้น</h4>
     </div>
-  </div>
-  <br>
-  <div *ngIf="Q2">
     <div class="row">
-      <div class="col-lg-12">
-        <h4 style="margin-left: 3%;">แบบคัดกรองโรคซึมเศร้า 2 คำถาม(2Q)</h4>
+      <div class="col-lg-1"></div>
+      <div class="col-lg-9" *ngIf="T_Q9">
+        <h5>2Q  : {{S_Q2}}</h5>
       </div>
     </div>
-    <div *ngFor="let question of questions ; let i = index">
-      <div class="row">
-        <div class="col-lg-1"></div>
-        <div class="col-lg-9">
-          <h5>ข้อ {{i+1}} : {{question.questionName}}</h5>
-        </div>
-      </div>
-      <div *ngFor="let choice of question.choices ; let is = index">
-        <div class="row">
-          <div class="col-lg-2"></div>
-          <div class="col-lg-10">
-            <input class="form-check-input" type="radio" name="criterion_{{i}}" value="{{choice.choiceCriterion}}" />
-              {{choice.choiceName}}
-          </div>
-        </div>
-      </div>
-      <hr>
-    </div>
-  </div>
-  <div  *ngIf="!Q2 && !Q8">
-    <div class="row" *ngIf="Q9">
-      <div class="col-lg-12">
-        <h4 style="margin-left: 3%;">แบบประเมินโรคซึมเศร้า 9 คำถาม(9Q)</h4>
-      </div>
-    </div>
-    <div *ngFor="let question of questions ; let i = index">
-      <div class="row">
-        <div class="col-lg-1"></div>
-        <div class="col-lg-9">
-          <h5>ข้อ {{i+1}} : {{question.questionName}}</h5>
-        </div>
-      </div>
-      <div *ngFor="let choice of question.choices ; let is = index">
-        <div class="row">
-          <div class="col-lg-2"></div>
-          <div class="col-lg-10">
-            <input class="form-check-input" type="radio" name="criterion_{{i}}" value="{{choice.choiceCriterion}}" />
-              {{choice.choiceName}}
-          </div>
-        </div>
-      </div>
-      <hr>
-    </div>
-  </div>
-  <div *ngIf="Q8">
+
     <div class="row">
-      <div class="col-lg-12">
-        <h4 style="margin-left: 3%;">แบบประเมินการฆ่าตัวตาย 8 คำถาม(8Q)</h4>
+      <div class="col-lg-1"></div>
+      <div class="col-lg-9" *ngIf="T_Q9">
+        <h5>9Q  : {{S_Q9}}</h5>
       </div>
     </div>
-    <div *ngFor="let question of questions ; let i = index">
-      <div class="row">
-        <div class="col-lg-1"></div>
-        <div class="col-lg-9">
-          <h5 *ngIf="i+1 != 4 " >ข้อ {{i+1}} : {{question.questionName}}</h5>
-          <h5 *ngIf="i+1 == 4" >ข้อ 3.1 : {{question.questionName}}</h5>
-        </div>
+
+    <div class="row">
+      <div class="col-lg-1"></div>
+      <div class="col-lg-9" *ngIf="T_Q9">
+        <h5>8Q  : {{S_Q8}}</h5>
       </div>
-      <div class="row">
-        <div class="col-lg-2"></div>
-        <div class="col-lg-10 " >
-          <input *ngIf="i+1 != 4 " (click)="check8Q(i,'Y',question.questionId)" type="radio" name="checkY_{{i}}"  value="1" id="1_{{i}}"  class="form-check-input"><span  *ngIf="i+1 != 4 ">มี</span>
-          <input *ngIf="i+1 == 4" [disabled]="!disabled"  (click)="check8Q(i,'Y',question.questionId)" type="radio" name="checkY_{{i}}"  value="1" id="1_{{i}}"  class="form-check-input"><span  *ngIf="i+1 == 4">มี</span>
-        </div>
-      </div>
-      <div class="row">
-        <div class="col-lg-2"></div>
-        <div class="col-lg-10 " >
-          <input *ngIf="i+1 != 4 " (click)="check8Q(i,'N',question.questionId)" type="radio" name="checkN_{{i}}" value="0" id="0_{{i}}" class="form-check-input"><span *ngIf="i+1 != 4 ">ไม่มี</span>
-          <input *ngIf="i+1 == 4" [disabled]="!disabled"  (click)="check8Q(i,'N',question.questionId)" type="radio" name="checkN_{{i}}" value="0" id="0_{{i}}" class="form-check-input"><span *ngIf="i+1 == 4">ไม่มี</span>
-        </div>
-      </div>
-      <hr>
     </div>
-  </div>
-
-  <!-- /.row -->
-  <br>
-  <div class="button">
-    <!-- <div class="col-lg-1"></div> -->
-    <!-- <button class="btn rounded-btn" (click)="onSubmitForm()">ยืนยัน</button>
-    &nbsp;
-    <button class="btn rounded-btn" (click)="onBack()">ยกเลิก</button> -->
-
-    <button *ngIf="!Q2 && !Q8 && !Q9" class="button button1" (click)="onSubmitForm()" >ยืนยัน</button>
-    <button *ngIf="Q2" class="button button1" (click)="onSubmitForm2Q()" >ยืนยัน</button>
-    <button *ngIf="Q8" class="button button1" (click)="onSubmitForm8Q()" >ยืนยัน</button>
-    <button *ngIf="Q9" class="button button1" (click)="onSubmitForm9Q()" >ยืนยัน</button>
-    <button class="button button2" (click)="onBack()">ยกเลิก</button>
 
 
-  </div>
-  <br>
-</form>
+    <div class="button">
+      <button  class="button button1" (click)="onSum()" >ยืนยัน</button>
+    </div>
+</div>
 
 
 <!-- <hr>

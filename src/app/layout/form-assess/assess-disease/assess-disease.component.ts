@@ -1,5 +1,5 @@
 import { HttpClient } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, TemplateRef, ViewChild } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { ApiServiceModule } from '../../api-service/api-service.module';
@@ -32,6 +32,13 @@ export class AssessDiseaseComponent implements OnInit {
   Q2 = false;
   Q8 = false;
   Q9 = false;
+
+  T_Sum = false;
+  T_Q8 = false;
+  T_Q9 = false;
+  S_Q8: String;
+  S_Q9: String;
+  S_Q2: String;
 
   inspectionForm: FormGroup = this.fb.group({
     inspectionId: this.fb.control('', Validators.required),
@@ -149,6 +156,7 @@ export class AssessDiseaseComponent implements OnInit {
             console.log(JSON.stringify(res));
             if (res.status) {
               alert('เป็นผู้มีความเสี่ยง หรือ มีแนวโน้มที่จะเป็นโรคซึมเศร้า ให้ประเมินต่อด้วยแบบประเมิน โรคซึมเศร้า 9Q');
+              this.S_Q2 = 'เป็นผู้มีความเสี่ยง หรือ มีแนวโน้มที่จะเป็นโรคซึมเศร้า ให้ประเมินต่อด้วยแบบประเมิน โรคซึมเศร้า 9Q';
                 this.Q2 =  false;
                 this.Q8 =  false;
                 this.Q9 = true;
@@ -209,16 +217,19 @@ export class AssessDiseaseComponent implements OnInit {
         (res: ResultSubmit) => {
           if (res.status) {
             alert(res.detail);
+              this.S_Q9 = res.detail;
               this.Q2 =  false;
               this.Q8 =  true;
               this.Q9 = false;
               this.checkQ = 8;
+              this.T_Q9 = true;
               this.assessmentId = res.assessmentId;
               this.getQuestion(this.checkQ);
           } else {
+            this.T_Sum = true;
             alert('ไม่มีอาการของโรคซึมเศร้าหรือมีอาการของโรคซึมเศร้า ระดับน้อยมาก');
-            this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
-            this.router.navigate(['/home']));
+            // this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
+            // this.router.navigate(['/home']));
           }
         }, (err) => {
           this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
@@ -249,12 +260,18 @@ export class AssessDiseaseComponent implements OnInit {
         (res: ResultSubmit) => {
           if (res.status) {
             alert(res.detail);
-            this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
-            this.router.navigate(['/home']));
+            this.S_Q8 = res.detail;
+            this.T_Sum = true;
+            this.T_Q8 = true;
+            // this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
+            // this.router.navigate(['/home']));
           } else {
             alert(res.detail);
-            this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
-            this.router.navigate(['/home']));
+            this.S_Q8 = res.detail;
+            this.T_Sum = true;
+            this.T_Q8 = true;
+            // this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
+            // this.router.navigate(['/home']));
           }
 
         }, (err) => {
@@ -399,6 +416,10 @@ export class AssessDiseaseComponent implements OnInit {
 
 
 
+  }
+  onSum () {
+    this.router.navigateByUrl('/RefrshComponent', {skipLocationChange: true}).then(() =>
+    this.router.navigate(['/home']));
   }
 }
 
